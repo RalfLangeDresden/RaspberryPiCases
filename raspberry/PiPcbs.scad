@@ -157,6 +157,38 @@ module pi3bPcb(withHeader=false)
       headerMale(20, 2, detail);
 }
 
+// Raspberry Pi 3 Model B+ printed circuit board
+module pi3bplusPcb(withHeader=false)
+{
+  // PCB
+  color("green") difference() {
+    hull() {
+      translate([-pi3bPcbW/2+pi3bPcbR, -pi3bPcbD/2+pi3bPcbR, 0])
+        cylinder(r=pi3bPcbR, h=pcbT, center=true);
+      translate([-pi3bPcbW/2+pi3bPcbR,  pi3bPcbD/2-pi3bPcbR, 0])
+        cylinder(r=pi3bPcbR, h=pcbT, center=true);
+      translate([ pi3bPcbW/2-pi3bPcbR, -pi3bPcbD/2+pi3bPcbR, 0])
+        cylinder(r=pi3bPcbR, h=pcbT, center=true);
+      translate([ pi3bPcbW/2-pi3bPcbR,  pi3bPcbD/2-pi3bPcbR, 0])
+        cylinder(r=pi3bPcbR, h=pcbT, center=true);
+    }
+
+    // Boreholes
+    translate([-pi3bHoleDC, 0, 0])
+      pi3Boreholes(pcbT+0.1);
+  }
+
+  // Header
+  if( withHeader ) {
+    // GPIO header
+    translate([-pi3bPcbW/2+29+pi3bHoleDX, pi3bPcbD/2-pi3bHoleDY, pcbT/2])
+      headerMale(20, 2, detail);
+    // PoE header
+    translate([-pi3bPcbW/2+58+pi4bHoleDX, pi3bPcbD/2-pi3bHoleDY-6.14, pcbT/2])
+      headerMale(2, 2, detail);
+  }
+}
+
 // Raspberry Pi 3 HAT printed circuit board
 module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, withHeader=false, socketFemaleZ=2, pinZ=6.55)
 {
@@ -240,9 +272,14 @@ module pi4bPcb(withHeader=false)
   }
 
   // Header
-  if( withHeader )
+  if( withHeader ) {
+    // GPIO header
     translate([-pi4bPcbW/2+29+pi4bHoleDX, pi4bPcbD/2-pi4bHoleDY, pcbT/2])
       headerMale(20, 2, detail);
+    // PoE header
+    translate([-pi4bPcbW/2+58+pi4bHoleDX, pi4bPcbD/2-pi4bHoleDY-6.14, pcbT/2])
+      headerMale(2, 2, detail);
+  }
 }
 
 // Boreholes for fixing Raspberry Pi Pico screws
@@ -390,14 +427,25 @@ if( displayImage == true) {
       }
     }
 
-    // RaspberryPi 3 Model B / B+
+    // RaspberryPi 3 Model B
     translate([pi3bPcbW/2, 0, 0]) {
       pi3bPcb(header);
 
       // Label
       translate([0, 0, pcbT/2]) {
         color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi 3 Model B / B+", size=3, halign="center", valign="center");
+          text("Raspberry Pi 3 Model B", size=3, halign="center", valign="center");
+      }
+    }
+
+    // RaspberryPi 3 Model B+
+    translate([pi3bPcbW/2+pi3bPcbW+10, 0, 0]) {
+      pi3bplusPcb(header);
+
+      // Label
+      translate([0, 0, pcbT/2]) {
+        color("white") linear_extrude(height=0.1)
+          text("Raspberry Pi 3 Model B+", size=3, halign="center", valign="center");
       }
     }
   }

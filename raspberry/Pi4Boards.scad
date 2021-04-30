@@ -29,23 +29,33 @@ module pi4B()
   pi4bPcb(true);
 
   // Label
-  translate([0,15,pcbT/2]) {
+  translate([0, 15, pcbT/2]) {
     color("white") linear_extrude(height=0.1)
       text("Raspberry Pi 4 Model B", size=2, halign="center", valign="center");
   }
+  translate([-10, -19, pcbT/2]) {
+    color("white") linear_extrude(height=0.1)
+      text("HDMI", size=3, halign="center", valign="center");
+  }
+
+  // Logo
+  translate([-32, -5, pcbT/2-0.4]) {
+    color("white")
+      import(file = "./RaspberryPiLogo.dxf", scale = 0.05);
+  }
 
   // Ethernet
-  translate([pi4bPcbW/2-8.5,-pi4bPcbD/2+10.25,0])
+  translate([pi4bPcbW/2-8.5, -pi4bPcbD/2+45.75, 0])
     ethernetSocket(detail);
 
   // USB sockets
-  translate([pi4bPcbW/2-7, -pi4bPcbD/2+29,0])
+  translate([pi4bPcbW/2-7, -pi4bPcbD/2+9.0, 0])
     usbASocketDouble(detail);
-  translate([pi4bPcbW/2-7, -pi4bPcbD/2+47,0])
+  translate([pi4bPcbW/2-7, -pi4bPcbD/2+27.0, 0])
     usbASocketDouble(detail);
 
   // micro USB socket
-  translate([-pi4bPcbW/2+11.2,-pi4bPcbD/2+1.5,0])
+  translate([-pi4bPcbW/2+11.2, -pi4bPcbD/2+1.5, 0])
     rotate([0,0,-90])
       usbMicroSocket(detail);
 
@@ -74,20 +84,28 @@ module pi4B()
     rotate([0,0,-90])
       connectorFoilCable(detail);
 
-  // Micro SD Card
+  // Micro SD card
   translate([-pi4bPcbW/2+13/2,0,0])
     rotate([0,180,0])
       microSDCardSlot(detail);
 
-  // Processor
-  translate([-pi4bPcbW/2+27,-pi4bPcbD/2+31,0])
-    bcm2837B0(heatSink, detail);
+  // Processor chip
+  translate([-pi4bPcbW/2+29.25,-pi4bPcbD/2+32.5,0])
+    bcm2711(heatSink, detail);
 
-  // GBit LAN and USB
-  translate([18,0,0])
-    lan7515(heatSink, detail);
+  // Memory chip
+  translate([-pi4bPcbW/2+44.15,-pi4bPcbD/2+32.5,0])
+    sdram(detail);
 
-  // ???
+  // GBit LAN chip
+  translate([-pi4bPcbW/2+58.50,-pi4bPcbD/2+38.45,0])
+    bcm54213pe(heatSink, detail);
+
+  // USB 3.0 chip
+  translate([-pi4bPcbW/2+59.50,-pi4bPcbD/2+24.4,0])
+    vl805q6(heatSink, detail);
+
+  // Power supply chip
   translate([-pi4bPcbW/2+10,-pi4bPcbD/2+11,0])
     mxl7704(heatSink, detail);
 

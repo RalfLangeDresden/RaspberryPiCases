@@ -14,8 +14,8 @@ include <PiParts.scad>
 use <PiPcbs.scad>
 
 // Which one would you like to see?
-displayPi3Bplus = false;    // Raspberry PI3 B+
-displayPi3_Pi3Hat = true;  // Raspberry PI3 & HAT board
+displayPi3Bplus = true;    // Raspberry PI3 B+
+displayPi3_Pi3Hat = false;  // Raspberry PI3 & HAT board
 
 detail = 1;
 
@@ -26,12 +26,22 @@ heatSink = true;  // true: Show the IC heatSink; false: Don't show the heatSink
 module pi3Bplus()
 {
   // PCB
-  pi3bPcb(true);
+  pi3bplusPcb(true);
 
   // Label
-  translate([0,15,pcbT/2]) {
+  translate([-8,18,pcbT/2]) {
     color("white") linear_extrude(height=0.1)
       text("Raspberry Pi 3 Model B+", size=2, halign="center", valign="center");
+  }
+  translate([-11, -13, pcbT/2]) {
+    color("white") linear_extrude(height=0.1)
+      text("HDMI", size=3, halign="center", valign="center");
+  }
+
+  // Logo
+  translate([8, 7, pcbT/2-0.4]) {
+    color("white")
+      import(file = "./RaspberryPiLogo.dxf", scale = 0.04);
   }
 
   // Ethernet
@@ -76,7 +86,7 @@ module pi3Bplus()
 
   // Processor
   translate([-pi3bPcbW/2+27,-pi3bPcbD/2+31,0])
-    bcm2837B0(heatSink, detail);
+    bcm2837(heatSink, detail);
 
   // GBit LAN and USB
   translate([18,0,0])

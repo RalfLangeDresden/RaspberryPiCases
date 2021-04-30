@@ -24,14 +24,18 @@ displayHdmiMicroSocket = false;      // HDMI micro socket
 displayAudioSocket = false;          // Audio socket
 displayConnectorFoilCable = false;   // Foil cable connector
 displayMicroSDCardSlot = false;      // Micro SD card slot
-displayBcm2837B0 = false;            // Cortex-A53 (ARMv8) 64-bit SoC @ 1.4GHz
+displayBcm2837 = false;              // Broadcom BCM2837, Cortex-A53 (ARMv8) 64-bit SoC @ 1.4GHz
+displayBcm2711 = false;              // Broadcom BCM2711, Quad core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz
+displaySdRam = false;                // LPDDR4-3200 SDRAM, 1 GB (??? 4HBMGCJ), 2 GB (Micron D9WHZ), 4 GB (Micron D9WHV), 8 GB ()
 displayLan7515 = false;              // GBit LAN and USB ports
+displayBcm54213pe = false;           // GBit LAN ports
+displayVl805q6 = true;              // USB 3.0 ports
 displayCyw43455 = false;             // WLAN & Bluetooth
 displayMxl7704 = false;              // 1024 MB LPDDR2 RAM
 displayHeatSink = false;             // Heat sink for processor and LAN/USB chip
 displayXlrShell = false;             // XLR shell for different ports
 displayThreadedSleeve = false;       // Threaded sleeve
-displayThreadedSleeveCorner = true; // Threaded sleeve in a corner
+displayThreadedSleeveCorner = false; // Threaded sleeve in a corner
 displayThreadedSleeveBorder = false; // Threaded sleeve on a border
 displayScrewNut = false;             // Screw nut
 displayBlockBoltHead = false;        // Block bolt hesd
@@ -43,7 +47,7 @@ displayAccuNCR18650B = false;
 displayXxx = false;
 
 detail = 1;
-heatSink = true;
+heatSink = false;
 $fn=100;
 
 
@@ -314,7 +318,7 @@ module microSDCardSlot(detail = 1)
   }
 }
 
-module bcm2837B0(heatSink=false, detail = 1)
+module bcm2837(heatSink=false, detail = 1)
 {
   translate([0,0,pcbT/2+2/2]) {
     color("silver") cube([14,14,2], center=true);
@@ -335,6 +339,43 @@ module bcm2837B0(heatSink=false, detail = 1)
   }
 }
 
+module bcm2711(heatSink=false, detail = 1)
+{
+  translate([0,0,pcbT/2+2/2]) {
+    color("silver") cube([15.0,15.0,2], center=true);
+    if (heatSink == true) {
+      translate([0,0,1])
+        heatSink(x=15.2, y=15.2, z=5, wings=7);
+    }
+    else {
+      translate([0,2,1])
+        color("black")
+          linear_extrude(height=0.1)
+            text("BROADCOM", size=1, halign="center", valign="center");
+      translate([0,-2,1])
+        color("black")
+          linear_extrude(height=0.1)
+            text("BCM2711B0", size=1, halign="center", valign="center");
+    }
+  }
+}
+
+module sdram(detail = 1)
+{
+  translate([0,0,pcbT/2+2/2]) {
+    color("silver") cube([10.0,15.0,2], center=true);
+    translate([0,2,1])
+      color("black")
+        linear_extrude(height=0.1)
+          text("Micron", size=1, halign="center", valign="center");
+    translate([0,-2,1])
+      color("black")
+        linear_extrude(height=0.1)
+          text("D9WHV", size=1, halign="center", valign="center");
+  }
+}
+
+// Raspberry Pi 3 GBit LAN
 module lan7515(heatSink=false, detail = 1)
 {
   translate([0,0,pcbT/2+2/2]) {
@@ -356,6 +397,47 @@ module lan7515(heatSink=false, detail = 1)
   }
 }
 
+// Raspberry Pi 4 GBit LAN Port
+module bcm54213pe(heatSink=false, detail = 1)
+{
+  translate([0,0,pcbT/2+2/2]) {
+    color("silver") cube([6.0,6.0,2], center=true);
+    if (heatSink == true) {
+      translate([0,0,1])
+        heatSink(x=6.0, y=6.0, z=5, wings=3);
+    }
+    else {
+      translate([0,0,1])
+        color("black")
+          linear_extrude(height=0.1)
+            text("BMC54213PE", size=0.5, halign="center", valign="center");
+    }
+  }
+}
+
+// Raspberry Pi 4 USB 3 Ports
+module vl805q6(heatSink=false, detail = 1)
+{
+  translate([0,0,pcbT/2+2/2]) {
+    color("silver") cube([8.0,8.0,2], center=true);
+    if (heatSink == true) {
+      translate([0,0,1])
+        heatSink(x=8.0, y=8.0, z=5, wings=4);
+    }
+    else {
+      translate([0,2,1])
+        color("black")
+          linear_extrude(height=0.1)
+            text("VIA", size=2, halign="center", valign="center");
+      translate([0,-2,1])
+        color("black")
+          linear_extrude(height=0.1)
+            text("VL805-Q6", size=1, halign="center", valign="center");
+    }
+  }
+}
+
+// Power supply
 module mxl7704(heatSink=false, detail = 1)
 {
   translate([0,0,pcbT/2+0.65/2]) {
@@ -375,6 +457,7 @@ module mxl7704(heatSink=false, detail = 1)
   }
 }
 
+// WLAN and Bluetooth
 module cyw43455(detail = 1)
 {
   translate([0,0,pcbT/2+4/2]) {
@@ -728,11 +811,23 @@ if(displayConnectorFoilCable) {
 if(displayMicroSDCardSlot) {
   microSDCardSlot(detail);
 }
-if(displayBcm2837B0) {
-  bcm2837B0(heatSink, detail);
+if(displayBcm2837) {
+  bcm2837(heatSink, detail);
+}
+if(displayBcm2711) {
+  bcm2711(heatSink, detail);
+}
+if(displaySdRam) {
+  sdram(detail);
 }
 if(displayLan7515) {
   lan7515(heatSink, detail);
+}
+if(displayBcm54213pe) {
+  bcm54213pe(heatSink, detail);
+}
+if(displayVl805q6) {
+  vl805q6(heatSink, detail);
 }
 if(displayCyw43455) {
   cyw43455(detail);
