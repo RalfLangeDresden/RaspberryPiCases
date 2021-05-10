@@ -13,7 +13,7 @@ use <PiOpenings.scad>
 use <../parts/Parts.scad>
 
 // Which one would you like to see?
-displayFan = false;
+displayFan = true;
 
 detail = 1;
 

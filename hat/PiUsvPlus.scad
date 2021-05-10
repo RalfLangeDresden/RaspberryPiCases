@@ -21,7 +21,7 @@ header = true; // true: Show Header; false:Don't show Header
 
 module piUsvPlus(detail=2)
 {
-  pi3HatPcb(false, true, 5.5, true);
+  pi3HatPcb(true, true, 5.5, true);
 
   // micro USB
   translate([-pi3HatPcbW/2+10.6,-pi3HatPcbD/2+1.5,0])
