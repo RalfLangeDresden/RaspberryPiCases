@@ -27,7 +27,7 @@ headerDown = false; // true: Header down (Only Zero); false: Header up
 module piPico(header = 0)
 {
   // PCB
-  piPicoPcb(true);
+  piPicoPcb();
 
   // Micro USB power socket
   translate([piPicoPcbW/2-usbMicroSocketW/2+1, 0, 0])
@@ -46,7 +46,7 @@ module piPico(header = 0)
   }
 }
 
-if(displayPiPico) {
+if (displayPiPico) {
   $fn=100;
 
   piPico(header ? (headerDown ? -1 : 1) : 0);

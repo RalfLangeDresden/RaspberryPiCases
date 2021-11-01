@@ -16,6 +16,7 @@ use <parts/CaseParts.scad>
 use <parts/Parts.scad>
 use <raspberry/Pi3Boards.scad>
 use <raspberry/PiOpenings.scad>
+use <raspberry/PiParts.scad>
 use <parts/Display7Board.scad>
 use <parts/Modules.scad>
 use <hat/HifiBerry.scad>
@@ -28,7 +29,7 @@ displayBack = false;          // Back part of the case
 displayAll = false;           // All parts together
 displayImage = true;         // All parts together in one image
 
-displayDevices = true;
+displayDevices = false;
 withThread = false;
 
 // Details of the drawing (larger is better)
@@ -303,31 +304,31 @@ module case7chassis(withDevices = false)
     // Additional openings
     // Quadreant I:
     translate([45, 34,chassisOpeningZ]) {
-      opening(52, 34, case7T);
+      opening(56, 38, case7T);
     }
     translate([85, 30.5,chassisOpeningZ]) {
-      opening(11, 27, case7T);
+      opening(15, 31, case7T);
     }
 
     // Quadrant II:
 
     // Quadrant III:
     translate([-40,-34.5,chassisOpeningZ]) {
-      opening(32, 37, case7T);
+      opening(36, 41, case7T);
     }
     translate([-77,-32,chassisOpeningZ]) {
-      opening(22, 32, case7T);
+      opening(26, 36, case7T);
     }
     translate([-40,0,chassisOpeningZ]) {
-      opening(32, 16, case7T);
+      opening(36, 20, case7T);
     }
 
     // Quadrant IV: Accumulator
     translate([-23, 23,chassisOpeningZ]) {
-      opening(66, 12, case7T);
+      opening(70, 16, case7T);
     }
     translate([-23, 45,chassisOpeningZ]) {
-      opening(66, 12, case7T);
+      opening(70, 16, case7T);
     }
   }
 

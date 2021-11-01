@@ -1,5 +1,6 @@
 // ========================================
 // Raspberry Pi case with 7" touch display
+// Case parts
 // Version 3
 // (c) Ralf Lange, longsoft.de
 // ========================================
@@ -18,6 +19,7 @@ use <parts/Modules.scad>
 use <raspberry/Pi3Boards.scad>
 use <raspberry/PiPcbs.scad>
 use <raspberry/PiOpenings.scad>;
+use <raspberry/PiParts.scad>;
 use <hat/HifiBerry.scad>
 use <hat/PiUsvPlus.scad>
 
@@ -28,7 +30,7 @@ displayBack = false;          // Back part of the case
 displayAll = false;           // All parts together
 displayImage = true;         // All parts together in one image
 
-displayDevices = true;
+displayDevices = false;
 withThread = false;
 
 // Details of the drawing (larger is better)
@@ -199,7 +201,7 @@ module case7chassis(withDevices = false)
 
     // Opening for touch display HDMI ans USB cable
     translate([-case7W/2+13, cableOffsetY, chassisOpeningZ]) {
-      opening(16, 52, chassisT);
+      opening(20, 56, chassisT);
     }
 
     // Fan
@@ -255,7 +257,7 @@ module case7chassis(withDevices = false)
 
     // Opening
     translate([40, -45,chassisOpeningZ]) {
-      opening(64, 10, chassisT);
+      opening(68, 14, chassisT);
     }
 
     // Boreholes
@@ -279,27 +281,27 @@ module case7chassis(withDevices = false)
 
     /* Quadreant I:
     translate([45, 34,chassisOpeningZ]) {
-      opening(50, 32, chassisT);
+      opening(54, 36, chassisT);
     }
     translate([85, 28,chassisOpeningZ]) {
-      opening(10, 25, chassisT);
+      opening(14, 29, chassisT);
     } */
 
     /* Quadrant II:
     translate([40, -23,chassisOpeningZ]) {
-      opening(64, 10, chassisT);
+      opening(68, 14, chassisT);
     } */
 
     // Quadrant III:
     translate([-35,-45,chassisOpeningZ]) {
-      opening(64, 10, chassisT);
+      opening(68, 14, chassisT);
     }
     /*
     translate([-77,-32,chassisOpeningZ]) {
-      opening(20, 30, chassisT);
+      opening(24, 34, chassisT);
     }
     translate([-40,0,chassisOpeningZ]) {
-      opening(30, 14, chassisT);
+      opening(34, 18, chassisT);
     } */
 
     // Quadrant IV:
@@ -322,19 +324,19 @@ module case7chassis(withDevices = false)
   if (withDevices) {
     // Raspberry 3+
     raspiOffsetZ = -case7ChassisH/2 + case7T;
-    translate([raspiOffsetX,raspiOffsetY,raspiOffsetZ])
+    translate([raspiOffsetX, raspiOffsetY, raspiOffsetZ])
       rotate([0,0,-90])
         pi3Bplus();
 
     // PiUSV+
     piusvOffsetZ = raspiOffsetZ + 10;
-    translate([raspiOffsetX, raspiOffsetY+pi3bHoleDC, hifiOffsetZ])
+    translate([raspiOffsetX, raspiOffsetY+pi3bHoleDC, piusvOffsetZ])
       rotate([0,0,-90])
         piUsvPlus();
 
     // HiFiBerry
     hifiOffsetZ = raspiOffsetZ + 10;
-    translate([hatOffsetX, raspiOffsetY+pi3bHoleDC, piusvOffsetZ])
+    translate([hatOffsetX, raspiOffsetY+pi3bHoleDC, hifiOffsetZ])
       rotate([0,0,-90])
         hifiBerryDacPlus(true);
 

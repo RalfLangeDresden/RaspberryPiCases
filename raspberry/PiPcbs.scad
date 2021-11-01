@@ -13,18 +13,20 @@ use <PiOpenings.scad>
 use <../parts/Parts.scad>
 
 // Which one would you like to see?
-displayPi0Boreholes = false;  // Raspberry PI Zero Boreholes
-displayPi0 = false;           // Raspberry PI Zero board
-displayPi0Hat = false;        // Raspberry PI Zero HAT board
-displayPi3Boreholes = false;  // Raspberry PI 3 Boreholes
-displayPi3a = false;          // Raspberry PI3 Model A board
-displayPi3b = false;          // Raspberry PI3 Model B board
-displayPi3Hat = false;        // Raspberry PI3 HAT board
-displayPi4Boreholes = false;  // Raspberry PI 4 Boreholes
-displayPi4b = false;          // Raspberry PI4 Model B board
+displayPi0Boreholes = false;     // Raspberry PI Zero Boreholes
+displayPi0 = false;              // Raspberry PI Zero board
+displayPi0Hat = false;           // Raspberry PI Zero HAT board
+displayPi3Boreholes = false;     // Raspberry PI 3 Boreholes
+displayPi3a = false;             // Raspberry PI3 Model A board
+displayPi3b = false;             // Raspberry PI3 Model B board
+displayPi3Hat = false;           // Raspberry PI3 HAT board
+displayPi4Boreholes = false;     // Raspberry PI 4 Boreholes
+displayPi4b = false;             // Raspberry PI4 Model B board
 displayPiPicoBoreholes = false;  // Raspberry PI Pico Boreholes
 displayPiPico = false;           // Raspberry PI Pico board
-displayImage = true;         // Display a image with all boards
+displayPiCameraV2 = false;       // Raspberry PI Camera board V2
+displayPiCameraHQ = false;       // Raspberry PI Camera beard HD
+displayImage = true;            // Display a image with all boards
 
 detail = 1;
 
@@ -60,7 +62,7 @@ module pi0Pcb(withHeader=false)
   }
 
   // Header
-  if( withHeader )
+  if (withHeader)
     translate([0, pi0HoleY/2, pcbT/2])
       headerMale(20, 2, detail);
 }
@@ -88,7 +90,7 @@ module pi0HatPcb(socketMaleZ=8.55, withHeader=false, socketFemaleZ=2, pinZ=6.55)
   }
 
   // Header top
-  if( withHeader )
+  if (withHeader)
     translate([0, pi0HatPcbD/2-pi0HatHoleDY, pcbT/2])
       headerMale(20, 2, socketFemaleZ, pinZ);
 
@@ -125,7 +127,7 @@ module pi3aPcb(withHeader=false)
   }
 
   // Header
-  if( withHeader )
+  if (withHeader)
     translate([0, pi3aPcbD/2-pi3bHoleDY, pcbT/2])
       headerMale(20, 2, detail);
 }
@@ -152,41 +154,9 @@ module pi3bPcb(withHeader=false)
   }
 
   // Header
-  if( withHeader )
+  if (withHeader)
     translate([-pi3bPcbW/2+29+pi3bHoleDX, pi3bPcbD/2-pi3bHoleDY, pcbT/2])
       headerMale(20, 2, detail);
-}
-
-// Raspberry Pi 3 Model B+ printed circuit board
-module pi3bplusPcb(withHeader=false)
-{
-  // PCB
-  color("green") difference() {
-    hull() {
-      translate([-pi3bPcbW/2+pi3bPcbR, -pi3bPcbD/2+pi3bPcbR, 0])
-        cylinder(r=pi3bPcbR, h=pcbT, center=true);
-      translate([-pi3bPcbW/2+pi3bPcbR,  pi3bPcbD/2-pi3bPcbR, 0])
-        cylinder(r=pi3bPcbR, h=pcbT, center=true);
-      translate([ pi3bPcbW/2-pi3bPcbR, -pi3bPcbD/2+pi3bPcbR, 0])
-        cylinder(r=pi3bPcbR, h=pcbT, center=true);
-      translate([ pi3bPcbW/2-pi3bPcbR,  pi3bPcbD/2-pi3bPcbR, 0])
-        cylinder(r=pi3bPcbR, h=pcbT, center=true);
-    }
-
-    // Boreholes
-    translate([-pi3bHoleDC, 0, 0])
-      pi3Boreholes(pcbT+0.1);
-  }
-
-  // Header
-  if( withHeader ) {
-    // GPIO header
-    translate([-pi3bPcbW/2+29+pi3bHoleDX, pi3bPcbD/2-pi3bHoleDY, pcbT/2])
-      headerMale(20, 2, detail);
-    // PoE header
-    translate([-pi3bPcbW/2+58+pi4bHoleDX, pi3bPcbD/2-pi3bHoleDY-6.14, pcbT/2])
-      headerMale(2, 2, detail);
-  }
 }
 
 // Raspberry Pi 3 HAT printed circuit board
@@ -210,7 +180,7 @@ module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, 
       pi3Boreholes(pcbT+0.1);
 
       // Camera flex slot
-      if( withCameraSlot ) {
+      if (withCameraSlot) {
         hull() {
           translate([-pi3HatPcbW/2+45, -pi3HatPcbD/2+11.5-17/2+1, 0])
             cylinder(d=2, h=pcbT+0.1, center=true);
@@ -220,7 +190,7 @@ module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, 
       }
 
       // Display flex slot
-      if( withDisplaySlot ) {
+      if (withDisplaySlot) {
         hull() {
           translate([-pi3HatPcbW/2+3.5, -pi3HatPcbD/2+19.5+1, 0])
             cylinder(d=2, h=pcbT+0.1, center=true);
@@ -234,7 +204,7 @@ module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, 
   }
 
   // Header top
-  if( withHeader )
+  if (withHeader)
     translate([0, pi3HatPcbD/2-pi3HatHoleDY, pcbT/2])
       headerMale(20, 2, socketFemaleZ, pinZ);
 
@@ -272,14 +242,9 @@ module pi4bPcb(withHeader=false)
   }
 
   // Header
-  if( withHeader ) {
-    // GPIO header
+  if (withHeader)
     translate([-pi4bPcbW/2+29+pi4bHoleDX, pi4bPcbD/2-pi4bHoleDY, pcbT/2])
       headerMale(20, 2, detail);
-    // PoE header
-    translate([-pi4bPcbW/2+58+pi4bHoleDX, pi4bPcbD/2-pi4bHoleDY-6.14, pcbT/2])
-      headerMale(2, 2, detail);
-  }
 }
 
 // Boreholes for fixing Raspberry Pi Pico screws
@@ -290,7 +255,7 @@ module piPicoBoreholes(chassisT)
 }
 
 // Raspberry Pi Pico printed circuit board
-module piPicoPcb(withHeader=false)
+module piPicoPcb()
 {
   // PCB
   color("red") difference() {
@@ -309,7 +274,7 @@ module piPicoPcb(withHeader=false)
     piPicoBoreholes(pcbT+0.1);
 
     // GPIO boreholes
-    for(w=[-19*1.27:2.54:19*1.27]) {
+    for (w=[-19*1.27:2.54:19*1.27]) {
       translate([w,  piPicoGpioD/2, 0])
         cylinder(h=pcbT+0.1, d=1, center=true);
       translate([w,  piPicoPcbD/2, 0])
@@ -321,7 +286,7 @@ module piPicoPcb(withHeader=false)
     }
 
     // ??? boreholes
-    for(d=[-1*2.54:2.54:1*2.54]) {
+    for (d=[-1*2.54:2.54:1*2.54]) {
       translate([-piPicoPcbW/2+(21-17.78)/2, d, 0])
         cylinder(h=pcbT+0.1, d=1, center=true);
       translate([-piPicoPcbW/2, d, 0])
@@ -330,6 +295,48 @@ module piPicoPcb(withHeader=false)
   }
 }
 
+module piCameraV2Pcb()
+{
+  // PCB
+  color("yellow")
+    difference() {
+      hull() {
+        translate([-piCameraV2PcbW/2+piCameraV2PcbR, -piCameraV2PcbD/2+piCameraV2PcbR, 0])
+          cylinder(r=piCameraV2PcbR, h=pcbT, center=true);
+        translate([-piCameraV2PcbW/2+piCameraV2PcbR,  piCameraV2PcbD/2-piCameraV2PcbR, 0])
+          cylinder(r=piCameraV2PcbR, h=pcbT, center=true);
+        translate([ piCameraV2PcbW/2-piCameraV2PcbR, -piCameraV2PcbD/2+piCameraV2PcbR, 0])
+          cylinder(r=piCameraV2PcbR, h=pcbT, center=true);
+        translate([ piCameraV2PcbW/2-piCameraV2PcbR,  piCameraV2PcbD/2-piCameraV2PcbR, 0])
+          cylinder(r=piCameraV2PcbR, h=pcbT, center=true);
+      }
+
+      // Boreholes
+      translate([-piCameraV2HoleDC, 0, 0])
+        boreholes(piCameraV2HoleX, piCameraV2HoleY, piCameraV2HoleD, pcbT);
+    }
+}
+
+module piCameraHqPcb()
+{
+  // PCB
+  color("yellow")
+    difference() {
+      hull() {
+        translate([-piCameraHqPcbW/2+piCameraHqPcbR, -piCameraHqPcbD/2+piCameraHqPcbR, 0])
+          cylinder(r=piCameraHqPcbR, h=pcbT, center=true);
+        translate([-piCameraHqPcbW/2+piCameraHqPcbR,  piCameraHqPcbD/2-piCameraHqPcbR, 0])
+          cylinder(r=piCameraHqPcbR, h=pcbT, center=true);
+        translate([ piCameraHqPcbW/2-piCameraHqPcbR, -piCameraHqPcbD/2+piCameraHqPcbR, 0])
+          cylinder(r=piCameraHqPcbR, h=pcbT, center=true);
+        translate([ piCameraHqPcbW/2-piCameraHqPcbR,  piCameraHqPcbD/2-piCameraHqPcbR, 0])
+          cylinder(r=piCameraHqPcbR, h=pcbT, center=true);
+      }
+
+      // Boreholes
+      boreholes(piCameraHqHoleX, piCameraHqHoleY, piCameraHqHoleD, pcbT);
+    }
+}
 
 // Display the selected modules
 if (displayPi0Boreholes == true) {
@@ -337,12 +344,12 @@ if (displayPi0Boreholes == true) {
 
   pi0Boreholes(5);
 }
-if(displayPi0 == true) {
+if (displayPi0 == true) {
   $fn=100;
 
   pi0Pcb(header);
 }
-if(displayPi0Hat == true) {
+if (displayPi0Hat == true) {
   $fn=100;
 
   pi0HatPcb(8.55, header);
@@ -352,17 +359,17 @@ if (displayPi3Boreholes == true) {
 
   pi3Boreholes(5);
 }
-if( displayPi3a == true) {
+if ( displayPi3a == true) {
   $fn=100;
 
   pi3aPcb(header);
 }
-if( displayPi3b == true) {
+if ( displayPi3b == true) {
   $fn=100;
 
   pi3bPcb(header);
 }
-if( displayPi3Hat == true) {
+if ( displayPi3Hat == true) {
   $fn=100;
 
   pi3HatPcb(true, true, 8.55, header);
@@ -372,7 +379,7 @@ if (displayPi4Boreholes == true) {
 
   pi4Boreholes(5);
 }
-if( displayPi4b == true) {
+if ( displayPi4b == true) {
   $fn=100;
 
   pi4bPcb(header);
@@ -382,37 +389,44 @@ if (displayPiPicoBoreholes == true) {
 
   piPicoBoreholes(5);
 }
-if(displayPiPico == true) {
+if (displayPiPico == true) {
   $fn=100;
 
-  piPicoPcb(header);
+  piPicoPcb();
 }
-if( displayImage == true) {
+if (displayPiCameraV2 == true) {
   $fn=100;
 
-  translate([0, pi3bPcbD+pi0PcbD/2+10, 0]) {
-    // RaspberryPi Zero
-    translate([-pi3aPcbW/2 -10, 0, 0]) {
-      pi0Pcb(header);
+  piCameraV2Pcb();
+}
+if (displayPiCameraHQ == true) {
+  $fn=100;
 
-      // Label
-      translate([0, 0, pcbT/2]) {
-        color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi Zero", size=3, halign="center", valign="center");
-      }
+  piCameraHqPcb();
+}
+if ( displayImage == true) {
+  $fn=100;
+
+  // RaspberryPi Zero
+  translate([-pi3aPcbW - pi0PcbW/2 -20.0, pi0PcbD/2, 0]) {
+    pi0Pcb(header);
+
+    // Label
+    translate([0, 0, pcbT/2]) {
+      color("white") linear_extrude(height=0.1)
+        text("Raspberry Pi Zero", size=3, halign="center", valign="center");
     }
+  }
+  
+  // RaspberryPi 0 HAT
+  translate([-pi3aPcbW - pi0PcbW/2 - 20.0, -pi0PcbD/2 - 10.0, 0]) {
+    pi0HatPcb(8.55, header);
 
-    // RaspberryPi 0 HAT
-    translate([pi0PcbW/2, 0, 0]) {
-      pi0HatPcb(8.55, header);
-
-      // Label
-      translate([0, 0, pcbT/2]) {
-        color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi Zero HAT", size=3, halign="center", valign="center");
-      }
+    // Label
+    translate([0, 0, pcbT/2]) {
+      color("white") linear_extrude(height=0.1)
+        text("Raspberry Pi Zero HAT", size=3, halign="center", valign="center");
     }
-
   }
 
   translate([0, pi3bPcbD/2, 0]) {
@@ -427,25 +441,14 @@ if( displayImage == true) {
       }
     }
 
-    // RaspberryPi 3 Model B
+    // RaspberryPi 3 Model B / B+
     translate([pi3bPcbW/2, 0, 0]) {
       pi3bPcb(header);
 
       // Label
       translate([0, 0, pcbT/2]) {
         color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi 3 Model B", size=3, halign="center", valign="center");
-      }
-    }
-
-    // RaspberryPi 3 Model B+
-    translate([pi3bPcbW/2+pi3bPcbW+10, 0, 0]) {
-      pi3bplusPcb(header);
-
-      // Label
-      translate([0, 0, pcbT/2]) {
-        color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi 3 Model B+", size=3, halign="center", valign="center");
+          text("Raspberry Pi 3 Model B / B+", size=3, halign="center", valign="center");
       }
     }
   }
@@ -474,16 +477,52 @@ if( displayImage == true) {
     }
   }
 
-  translate([0, -pi4bPcbD-piPicoPcbD/2-20, 0]) {
-    // RaspberryPi Pico
-    translate([-piPicoPcbW/2 -10, 0, 0]) {
-      piPicoPcb(header);
+  // RaspberryPi Pico
+  translate([-pi3aPcbW - piPicoPcbW/2 - 20.0, -pi0PcbD - piPicoPcbD/2 - 20.0, 0]) {
+    piPicoPcb();
 
-      // Label
-      translate([0, 0, pcbT/2]) {
-        color("white") linear_extrude(height=0.1)
-          text("Raspberry Pi Pico", size=3, halign="center", valign="center");
-      }
+    // Label
+    translate([0, 0, pcbT/2]) {
+      color("white") linear_extrude(height=0.1)
+        text("Raspberry Pi Pico", size=3, halign="center", valign="center");
+    }
+  }
+  
+  // Raspberry Camera Module V2
+  translate([pi3bPcbW + piCameraV2PcbW/2 + 10.0, piCameraV2PcbW/2, 0]) {
+    piCameraV2Pcb();
+
+    // Label
+    translate([0, 5, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("Raspberry", size=3, halign="center", valign="center");
+    }
+    translate([0, 0, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("Camera", size=3, halign="center", valign="center");
+    }
+    translate([0, -5, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("V2", size=3, halign="center", valign="center");
+    }
+  }
+  
+  // Raspberry Camera Module HQ
+  translate([pi4bPcbW + piCameraHqPcbW/2 + 10, -piCameraHqPcbW/2 - 10.0, 0]) {
+    piCameraHqPcb();
+
+    // Label
+    translate([0, 5, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("Raspberry", size=3, halign="center", valign="center");
+    }
+    translate([0, 0, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("Camera", size=3, halign="center", valign="center");
+    }
+    translate([0, -5, pcbT/2]) {
+      color("black") linear_extrude(height=0.1)
+        text("HD", size=3, halign="center", valign="center");
     }
   }
 }

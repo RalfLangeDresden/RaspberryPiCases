@@ -6,12 +6,11 @@
 
 // External definitions
 include <Pi3Constants.scad>
-include <PiPcbConstants.scad>
-include <PiParts.scad>
-// include <../parts/PartConstants.scad>
+include <../parts/PartConstants.scad>
 
 // External modules
 use <PiPcbs.scad>
+use <../parts/Parts.scad>
 
 // Which one would you like to see?
 displayPi3Bplus = true;    // Raspberry PI3 B+
@@ -26,7 +25,7 @@ heatSink = true;  // true: Show the IC heatSink; false: Don't show the heatSink
 module pi3Bplus()
 {
   // PCB
-  pi3bplusPcb(true);
+  pi3bPcb(true);
 
   // Label
   translate([-8,18,pcbT/2]) {
@@ -44,44 +43,44 @@ module pi3Bplus()
       import(file = "./RaspberryPiLogo.dxf", scale = 0.04);
   }
 
-  // Ethernet
-  translate([pi3bPcbW/2-8.5,-pi3bPcbD/2+10.25,0])
-    ethernetSocket(detail);
-
-  // USB sockets
-  translate([pi3bPcbW/2-7, -pi3bPcbD/2+29,0])
-    usbASocketDouble(detail);
-  translate([pi3bPcbW/2-7, -pi3bPcbD/2+47,0])
-    usbASocketDouble(detail);
-
   // micro USB socket
-  translate([-pi3bPcbW/2+10.6,-pi3bPcbD/2+1.5,0])
-    rotate([0,0,-90])
+  translate([microUsbOffsetW, microUsbOffsetD, microUsbOffsetZ])
+    rotate([0, 0, -90])
       usbMicroSocket(detail);
 
   // HDMI socket
-  translate([-pi3bPcbW/2+32,-pi3bPcbD/2+4,0])
-    rotate([0,0,-90])
+  translate([hdmiOffsetW, hdmiOffsetD, hdmiOffsetZ])
+    rotate([0, 0, -90])
       hdmiSocket(detail);
 
   // Camera connector
-  translate([-pi3bPcbW/2+46.5,-pi3bPcbD/2+11.5,0])
-    rotate([0,0,90])
-      connectorFoilCable(detail);
+  translate([cameraOffsetW, cameraOffsetD, cameraOffsetZ])
+    rotate([0, 0, 90])
+      connectRibbonVertical(cameraRibbonW, detail);
 
   // Audio
-  translate([-pi3bPcbW/2+54,-pi3bPcbD/2+5,0])
-    rotate([0,0,-90])
+  translate([audioOffsetW, audioOffsetD, audioOffsetZ])
+    rotate([0, 0, -90])
       audioSocket(detail);
 
+  // Ethernet
+  translate([ethernetOffsetW, ethernetOffsetD, ethernetOffsetZ])
+    ethernetSocket(detail);
+
+  // USB sockets
+  translate([usbA1OffsetW, usbA1OffsetD, usbA1OffsetZ])
+    usbASocketDouble(detail);
+  translate([usbA2OffsetW, usbA2OffsetD, usbA2OffsetZ])
+    usbASocketDouble(detail);
+
   // Display connector
-  translate([-pi3bPcbW/2+3.5,-pi3bPcbD/2+28,0])
-    rotate([0,0,-90])
-      connectorFoilCable(detail);
+  translate([displayOffsetW, displayOffsetD, displayOffsetZ])
+    rotate([0, 0, -90])
+      connectRibbonVertical(displayRibbonW, detail);
 
   // Micro SD Card
-  translate([-pi3bPcbW/2+13/2,0,0])
-    rotate([0,180,0])
+  translate([sdCardOffsetW, sdCardOffsetD, sdCardOffsetZ])
+    rotate([0, 180, 0])
       microSDCardSlot(detail);
 
   // Processor
@@ -92,7 +91,7 @@ module pi3Bplus()
   translate([18,0,0])
     lan7515(heatSink, detail);
 
-  // ???
+  // Power supply
   translate([-pi3bPcbW/2+10,-pi3bPcbD/2+11,0])
     mxl7704(heatSink, detail);
 

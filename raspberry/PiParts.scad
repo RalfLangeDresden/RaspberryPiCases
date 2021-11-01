@@ -85,8 +85,10 @@ module piFan()
 
 module piFanOpening(chassisT)
 {
+  space = 2.0;
+  
   translate([0,0,0])
-    opening(piFanH, piFanW, chassisT);
+    opening(piFanH + 2*space, piFanW + 2*space, chassisT);
 }
 
 // Display the selected modules
@@ -98,7 +100,7 @@ if(displayFan == true) {
   translate([0,0,10])
     piFanBoreholes(5);
 
-  translate([piFanW/2-2.5,0,2])
+  translate([piFanW/2, 0, 0])
     rotate([0,90,0])
       piFanOpening(5);
 }

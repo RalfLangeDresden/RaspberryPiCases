@@ -1,6 +1,7 @@
 // ========================================
 // Raspberry Pi case with 7" touch display
 // Constant definitions
+// Version 3
 // (c) Ralf Lange, longsoft.de
 // ========================================
 

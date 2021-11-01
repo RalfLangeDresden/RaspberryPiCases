@@ -84,3 +84,24 @@ piPicoHoleX = 47;   // Centred hole distance on X axis (47 mm)
 piPicoHoleY = 11.4; // Centred hole distance on Y axis (11.4 mm)
 piPicoHoleD = 2.1 ; // Hole radius (2.1 mm)
 piPicoGpioD = 17.78;// GPIO depth (17.78 mm)
+
+// Dimensions Raspberry Camera Module V2
+
+piCameraV2PcbW = 23.862; // Printed circuit board width (23.862 mm)
+piCameraV2PcbD = 25;     // Printed circuit board depth (25 mm)
+piCameraV2PcbH = 5;      // Printed circuit board hight (5 mm)
+piCameraV2PcbR = 2;      // Printed circuit board corner radius (2 mm)
+piCameraV2HoleX = 12.5;  // Centred hole distance on X axis (12.5 mm)
+piCameraV2HoleY = 21;    // Centred hole distance on Y axis (21 mm)
+piCameraV2HoleDC = (piCameraV2PcbW - piCameraV2HoleX - 2 * piCameraV2PcbR) / 2; // Distance between hole center and PCB center
+piCameraV2HoleD = 2.2;   // Hole diameter (2.2 mm)
+
+// Dimensions Raspberry Camera module HQ
+
+piCameraHqPcbW = 38;    // Printed circuit board width (38 mm)
+piCameraHqPcbD = 38;    // Printed circuit board depth (38 mm)
+piCameraHqPcbH = 5;     // Printed circuit board hight (5 mm)
+piCameraHqPcbR = 2.5;     // Printed circuit board corner radius (2.5 mm)
+piCameraHqHoleX = 30;   // Centred hole distance on X axis (30 mm)
+piCameraHqHoleY = 30;   // Centred hole distance on Y axis (30 mm)
+piCameraHqHoleD = 2.5;  // Hole diameter (2.5 mm)
