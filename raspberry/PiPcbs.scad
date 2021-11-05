@@ -24,9 +24,9 @@ displayPi4Boreholes = false;     // Raspberry PI 4 Boreholes
 displayPi4b = false;             // Raspberry PI4 Model B board
 displayPiPicoBoreholes = false;  // Raspberry PI Pico Boreholes
 displayPiPico = false;           // Raspberry PI Pico board
-displayPiCameraV2 = false;       // Raspberry PI Camera board V2
+displayPiCameraV2 = true;       // Raspberry PI Camera board V2
 displayPiCameraHQ = false;       // Raspberry PI Camera beard HD
-displayImage = true;            // Display a image with all boards
+displayImage = false;            // Display a image with all boards
 
 detail = 1;
 
@@ -310,7 +310,7 @@ module piCameraV2Pcb()
         translate([ piCameraV2PcbW/2-piCameraV2PcbR,  piCameraV2PcbD/2-piCameraV2PcbR, 0])
           cylinder(r=piCameraV2PcbR, h=pcbT, center=true);
       }
-
+      
       // Boreholes
       translate([-piCameraV2HoleDC, 0, 0])
         boreholes(piCameraV2HoleX, piCameraV2HoleY, piCameraV2HoleD, pcbT);

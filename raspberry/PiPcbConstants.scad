@@ -87,14 +87,17 @@ piPicoGpioD = 17.78;// GPIO depth (17.78 mm)
 
 // Dimensions Raspberry Camera Module V2
 
-piCameraV2PcbW = 23.862; // Printed circuit board width (23.862 mm)
-piCameraV2PcbD = 25;     // Printed circuit board depth (25 mm)
-piCameraV2PcbH = 5;      // Printed circuit board hight (5 mm)
-piCameraV2PcbR = 2;      // Printed circuit board corner radius (2 mm)
-piCameraV2HoleX = 12.5;  // Centred hole distance on X axis (12.5 mm)
-piCameraV2HoleY = 21;    // Centred hole distance on Y axis (21 mm)
+piCameraV2PcbW = 23.862;    // Printed circuit board width (23.862 mm)
+piCameraV2PcbD = 25;        // Printed circuit board depth (25 mm)
+piCameraV2PcbH = 5;         // Printed circuit board hight (5 mm)
+piCameraV2PcbR = 2;         // Printed circuit board corner radius (2 mm)
+piCameraV2HoleX = 12.5;     // Centred hole distance on X axis (12.5 mm)
+piCameraV2HoleY = 21;       // Centred hole distance on Y axis (21 mm)
 piCameraV2HoleDC = (piCameraV2PcbW - piCameraV2HoleX - 2 * piCameraV2PcbR) / 2; // Distance between hole center and PCB center
-piCameraV2HoleD = 2.2;   // Hole diameter (2.2 mm)
+piCameraV2HoleD = 2.2;      // Hole diameter (2.2 mm)
+piCameraV2OffsetW = 1.245;  // Ribbon offset width
+piCameraV2OffsetX = (piCameraV2PcbW - piCameraV2OffsetW)/2; // Ribbon connector offset on x axis
+piCameraV2OffsetY = 0.0;    // Ribbon opening offset on y axis
 
 // Dimensions Raspberry Camera module HQ
 

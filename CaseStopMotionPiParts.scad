@@ -311,28 +311,28 @@ if(displayBack) {
   stopMotionPiBack(displayDevices);
 }
 if(displayAll) {
-  translate([0,0,-20])
+  translate([0, 0, 0])
     rotate([0, 0, 180])
       stopMotionPiBack(false);
 
-  translate([0,0,stopMotionPiBackH/2 + stopMotionPiChassisH/2 + 1])
+  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH/2 + 1])
     rotate([0, 180, 0])
       stopMotionPiChassis(displayDevices);
 
-  translate([0,0,stopMotionPiBackH/2 + stopMotionPiChassisH + stopMotionPiFrontH/2 + 2])
+  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH + stopMotionPiFrontH/2 + 2])
     rotate([0, 180, 0])
       stopMotionPiFront(displayDevices);
 }
 if(displayImage) {
-  translate([(stopMotionPiD+10),0,0])
-    rotate([0,0,90])
+  translate([(stopMotionPiD+10), 0, 0])
+    rotate([0, 0, 90])
       stopMotionPiBack(false);
 
-  translate([0,0,0])
-    rotate([0,0,90])
+  translate([0, 0, 0])
+    rotate([0, 0, 90])
       stopMotionPiChassis(false);
 
-  translate([-(stopMotionPiD+10),0,0])
-    rotate([0,0,90])
+  translate([-(stopMotionPiD+10), 0, 0])
+    rotate([0, 0, 90])
       stopMotionPiFront(false);
 }

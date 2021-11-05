@@ -16,9 +16,35 @@ use <PiOpenings.scad>
 use <../parts/Parts.scad>
 
 // Which one would you like to see?
-displayPiCameraHQ = true;  // Raspberry PI Zero Boreholes
+displayPiCameraV2 = true;  // Raspberry PI Camera V2 Module
+displayPiCameraHQ = false;  // Raspberry PI Camera HQ Module
 
 detail = 1;
+
+// Base on PI CAMERA MODULE V2.1 drawing
+module piCameraV2()
+{
+  cameraRibbonW = 22.0;
+
+  // PCB
+  piCameraV2Pcb();
+
+  // Sensor
+  color("black")
+    translate([piCameraV2PcbW/2 - 9.462, 0, (pcbT + 2.0)/2])
+      cube([8.5, 8.5, 2.0], center=true);
+  color("lightblue")
+    translate([piCameraV2PcbW/2 - 9.462, 0, pcbT/2 + 2.0 + 2.0/2])
+      difference() {
+        cylinder(h=2.0, d=8.0, center=true);
+        cylinder(h=2.1, d=2.0, center=true);
+      }
+  
+  // Camera ribbon cable
+  translate([piCameraV2OffsetX - ribbonConnectorH/2, 0, 0])
+    rotate([180, 0, -90])
+      connectRibbonHorizontal(cameraRibbonW, detail);
+}
 
 // header: 0 no, 1= up, -1, down
 module piCameraHq(rotated = false)
@@ -100,6 +126,11 @@ module piCameraHq(rotated = false)
   }
 }
 
+if (displayPiCameraV2) {
+  $fn=100;
+
+  piCameraV2();
+}
 if (displayPiCameraHQ) {
   $fn=100;
 
