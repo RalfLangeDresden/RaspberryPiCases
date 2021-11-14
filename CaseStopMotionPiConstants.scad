@@ -9,9 +9,9 @@
 
 stopMotionPiW = 100.0;        // Case width (200 mm)
 stopMotionPiD = 70.0;         // Case depth (132 mm)
-stopMotionPiFrontH = 6.0;     // Front part hight (18 mm)
-stopMotionPiChassisH = 22.0;  // Chasis part hight (26 mm)
-stopMotionPiBackH = 5.0;      // Back part hight (6 mm)
+stopMotionPiFrontH = 6.0;     // Front part hight (6 mm)
+stopMotionPiChassisH = 22.0;  // Chasis part hight (22 mm)
+stopMotionPiBackH = 5.0;      // Back part hight (5 mm)
 stopMotionPiH = stopMotionPiFrontH+stopMotionPiChassisH+stopMotionPiBackH;
 stopMotionPiR = 4.0;          // Case corner radius (4 mm)
 stopMotionPiT = 2.0;          // Case wall thickness (2 mm)

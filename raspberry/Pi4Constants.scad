@@ -5,23 +5,24 @@
 // ========================================
 
 include <PiPcbConstants.scad>
+include <../parts/PartConstants.scad>
 
 // Offsets for micro USB socket
 
 microUsbOffsetW = -pi4bPcbW/2 + 3.5 + 7.7;
-microUsbOffsetD = -26.5;
+microUsbOffsetD = -pi4bPcbD/2 + usbMicroSocketW/2 - 1.5;
 microUsbOffsetZ = 0.0;
 
 // Offsets for 1. micro HDMI socket
 
 microHdmi1OffsetW = microUsbOffsetW + 14.8;
-microHdmi1OffsetD = -26.0;
+microHdmi1OffsetD = -pi4bPcbD/2 + hdmiMicroPlugW/2 - 1.5;
 microHdmi1OffsetZ = 0.0;
 
 // Offsets for 2. micro HDMI socket
 
 microHdmi2OffsetW = microHdmi1OffsetW + 13.5;
-microHdmi2OffsetD = -26.0;
+microHdmi2OffsetD = -pi4bPcbD/2 + hdmiMicroPlugW/2 - 1.5;
 microHdmi2OffsetZ = 0.0;
 
 // Offsets for camera connector
@@ -34,24 +35,24 @@ cameraOffsetZ = 0.0;
 // Offsets for audio socket
 
 audioOffsetW = cameraOffsetW + 7.5;
-audioOffsetD = -pi4bPcbD/2 + 5.0;
+audioOffsetD = -pi4bPcbD/2 + audioSocketW/2;
 audioOffsetZ = 0.0;
 
 // Offsets for 1. USB A socket
 
-usbA1OffsetW = pi3bPcbW/2 - 7.0;
+usbA1OffsetW = pi3bPcbW/2 - usbADoubleSocketW/2 + 3.0;
 usbA1OffsetD = -pi4bPcbD/2 + 9.0;
 usbA1OffsetZ = 0.0;
 
 // Offsets for 2. USB A socket
 
-usbA2OffsetW = pi3bPcbW/2 - 7.0;
+usbA2OffsetW = pi3bPcbW/2 - usbADoubleSocketW/2 + 3.0;
 usbA2OffsetD = -pi4bPcbD/2 + 27.0;
 usbA2OffsetZ = 0.0;
 
 // Offsets for ethernet socket
 
-ethernetOffsetW = pi4bPcbW/2 - 8.5;
+ethernetOffsetW = pi4bPcbW/2 - ethernetSocketW/2 + 3.0;
 ethernetOffsetD = -pi4bPcbD/2 + 45.75;
 ethernetOffsetZ = 0.0;
 
