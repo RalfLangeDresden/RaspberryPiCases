@@ -27,3 +27,4 @@ The second case is for the StopMotionPi project. It has a Raspberry Pi 4b and a 
 As a base for most of the cases, the sub directory parts contain the empty three part case and all the active and passive components.
 
 ![Universal case](image/Case3Parts.png)
+
