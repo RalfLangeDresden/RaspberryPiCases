@@ -17,19 +17,19 @@ ethernetSocketH = 13.5;
 // Dimensions usb a double
 
 usbADoubleSocketW = 17.0;
-usbADoubleSocketD = 13.0;
+usbADoubleSocketD = 14.5;
 usbADoubleSocketH = 16.0;
 
 // Dimensions usb micro connectors
 
 usbMicroPlugW = 1.0;
-usbMicroPlugD = 1.0;
-usbMicroPlugH = 4.55;
+usbMicroPlugD = 8.4;
+usbMicroPlugH = 2.53;
 usbMicroTrapezeH = 1.0;
 
-usbMicroSocketW = 6;
-usbMicroSocketD = 8;
-usbMicroSocketH = 2.6;
+usbMicroSocketW = 7.37;
+usbMicroSocketD = 9.0;
+usbMicroSocketH = 3.15;
 
 // Dimensions hdmi connectors
 
@@ -66,10 +66,10 @@ hdmiMicroSocketH = 3.0;
 
 // Dimensions audio connectors
 
-audioSocketW = 13.0;
+audioSocketW = 12.4;
 audioSocketD = 7.0;
-audioSocketH = 5.6;
-audioSocketR = 2.8;
+audioSocketH = 6.0;
+audioSocketR = 3.0;
 
 // Dimensions ribbon cable connectors
 ribbonConnectorD = 4.0;

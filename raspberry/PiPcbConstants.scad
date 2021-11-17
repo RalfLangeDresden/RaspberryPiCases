@@ -74,6 +74,18 @@ pi4bHoleD = 2.75;  // Hole diameter (2.75 mm)
 pi4bHoleDX = 3.5;  // Distance between left edge and hole center (3.5 mm)
 pi4bHoleDY = 3.5;  // Distance between front edge and hole center (3.5 mm)
 
+// Dimensions Raspberry 4 Hat Modul
+
+pi4HatPcbW = 65;    // Printed circuit board width (85 mm)
+pi4HatPcbD = 56.5;  // Printed circuit board depth (56 mm)
+pi4HatPcbH = 16;    // Printed circuit board hight (16 mm)
+pi4HatPcbR = 3;     // Printed circuit board corner radius (3 mm)
+pi4HatHoleX = 58;   // Centred hole distance on X axis (58 mm)
+pi4HatHoleY = 49;   // Centred hole distance on Y axis (49 mm)
+pi4HatHoleD = 2.75; // Hole diameter (2.75 mm)
+pi4HatHoleDX = 3.5; // Distance between left edge and hole center (3.5 mm)
+pi4HatHoleDY = 3.5; // Distance between front edge and hole center (3.5 mm)
+
 // Dimensions Raspberry Pico
 
 piPicoPcbW = 51;    // Printed circuit board width (51 mm)

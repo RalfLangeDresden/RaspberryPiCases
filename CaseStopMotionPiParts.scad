@@ -31,17 +31,24 @@ displayBack = false;          // Back part of the case
 displayAll = false;           // All parts together
 displayImage = true;         // All parts together in one image
 
-displayDevices = true;
+displayDevices = false;
 withThread = false;
 
 // Details of the drawing (larger is better)
 $fn=100;
 
 // Rasberry Pi printed ciruits board position
-raspiOffsetX = 5;
-raspiOffsetY = -4;
-raspiOffsetZ = -stopMotionPiChassisH/2 + stopMotionPiT;
-holeH = 2;
+raspiOffsetX = 4.0;
+raspiOffsetY = -4.0;
+raspiOffsetZ = -stopMotionPiChassisH/2 + stopMotionPiT + pcbT/2;
+stepBottonW = 10.0;
+stepH = stopMotionPiChassisH - stopMotionPiT - pcbT;
+stepOffsetX = stopMotionPiW/2 - stepH/2 - stepBottonW;
+stepOffsetY = 0.0;
+stepOffsetZ = stopMotionPiT/2 + pcbT/2;
+holeH = 2.0;
+connectorSpace = 0.4;
+plugSpace = 2.0;
 
 module stopMotionPiFront(withDevices = false)
 {
@@ -51,47 +58,8 @@ module stopMotionPiFront(withDevices = false)
   
   color("silver") {
     difference() {
-      // Outer hull
-      hull() {
-        translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiFrontH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiFrontH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiFrontH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiFrontH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-      }
-      
-      // Inner hull
-      translate([0,0,stopMotionPiT/2+0.1]) {
-        hull() {
-          translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiFrontH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-        }
-      }
+      // Case
+      case3PartsFront(stopMotionPiW, stopMotionPiD, stopMotionPiFrontH, stopMotionPiR, stopMotionPiT);
       
       // Camera pcb
       translate([cameraOffsetX, cameraOffsetY, cameraOffsetZ])
@@ -108,6 +76,11 @@ module stopMotionPiFront(withDevices = false)
     }
   }
   
+  /* Check the part height
+  color("black")
+    translate([0, -stopMotionPiD/2 -5, -stopMotionPiFrontH/2])
+      cube([10, 10, stopMotionPiFrontH], center=false);
+  */
   // Render devices?
   if (withDevices) {
     // Raspberry Camera HQ
@@ -124,35 +97,12 @@ module stopMotionPiChassis(withDevices = false)
 
   color("silver") {
     difference() {
-      // Outer hull
-      hull() {
-        translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-      }
-      
-      // Inner hull
-      translate([0,0,chassisT-chassisT/2+0.05]) {
-        hull() {
-          translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiChassisH-chassisT+0.1, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiChassisH-chassisT+0.1, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiChassisH-chassisT+0.1, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiChassisH-chassisT+0.1, r=stopMotionPiR-stopMotionPiT, center=true);
-        }
-      }
+      // Case
+      case3PartsChassis(stopMotionPiW, stopMotionPiD, stopMotionPiChassisH, stopMotionPiR, stopMotionPiT, chassisT);
       
       // Opening and boreholes for Raspberry Pi
-      translate([raspiOffsetX,raspiOffsetY,raspiOpeningZ])
-        rotate([0,0,0]) {
+      translate([raspiOffsetX, raspiOffsetY, raspiOpeningZ])
+        rotate([0, 0, 0]) {
           pi4bOpening(chassisT, 0);
         }
       
@@ -164,30 +114,11 @@ module stopMotionPiChassis(withDevices = false)
       }
       
       // Opening for connectors
-      connectorSpace = 0.2;
-      plugSpace = 2.0;
       connectorOffsetZ = raspiOffsetZ + pcbT/2 + connectorSpace/2;
-      // Ethernet
-      translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + ethernetOffsetD, connectorOffsetZ + ethernetSocketH/2])
-        rotate([0, 90, 0])
-          cube([ethernetSocketH + connectorSpace, ethernetSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
-      translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + ethernetOffsetD, connectorOffsetZ + ethernetSocketH/2])
-        rotate([0, 90, 0])
-          cube([ethernetSocketH + connectorSpace + plugSpace, ethernetSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
-      // 1. USB A
-      translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + usbA1OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
-        rotate([0, 90, 0])
-          cube([usbADoubleSocketH + connectorSpace, usbADoubleSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
-      translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + usbA1OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
-        rotate([0, 90, 0])
-          cube([usbADoubleSocketH + connectorSpace + plugSpace, usbADoubleSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
-      // 2. USB A
-      translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + usbA2OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
-        rotate([0, 90, 0])
-          cube([usbADoubleSocketH + connectorSpace, usbADoubleSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
-      translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + usbA2OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
-        rotate([0, 90, 0])
-          cube([usbADoubleSocketH + connectorSpace + plugSpace, usbADoubleSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
+      
+      // Ethernet and USB A
+      openings(connectorOffsetZ);
+      
       // Micro USB
       translate([raspiOffsetX + microUsbOffsetW, -stopMotionPiD/2 + 3*chassisT/4, connectorOffsetZ + usbMicroSocketH/2])
         rotate([90, 0, 0])
@@ -210,15 +141,27 @@ module stopMotionPiChassis(withDevices = false)
         rotate([90, 0, 0])
           cube([hdmiMicroSocketD + connectorSpace + plugSpace, hdmiMicroSocketH + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
       // Audio
-      translate([raspiOffsetX + audioOffsetW, -stopMotionPiD/2 + 3*chassisT/4, connectorOffsetZ + audioSocketH/2])
+      translate([raspiOffsetX + audioOffsetW, -stopMotionPiD/2 + 3*chassisT/4, connectorOffsetZ + audioSocketR - connectorSpace/2])
         rotate([90, 0, 0])
-          cube([audioSocketD + connectorSpace, audioSocketH + connectorSpace, chassisT/2 + 0.2], center=true);
+          cylinder(h = chassisT, r = audioSocketR + connectorSpace/2, center=true);
       translate([raspiOffsetX + audioOffsetW, -stopMotionPiD/2 + chassisT/4, connectorOffsetZ + audioSocketH/2])
         rotate([90, 0, 0])
-          cube([audioSocketD + connectorSpace + plugSpace, audioSocketH + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
+          cylinder(h = chassisT/2 + 0.2, r = audioSocketR + (connectorSpace + plugSpace)/2, center=true);
+      
+      translate([stepOffsetX, stepOffsetY, stepOffsetZ]) {
+        rotate([180, 0, 0])
+          triangularPrism();
+        translate([(stepH + 0.1 + stepBottonW)/2, 0, 0])
+          cube([stepBottonW + 0.1, stopMotionPiD + 0.1, stepH + 0.1], center = true);
+      }
     }
   }
   
+  /* Check the part height
+  color("black")
+    translate([0, -stopMotionPiD/2 -5, -stopMotionPiChassisH/2])
+      cube([10, 10, stopMotionPiChassisH], center=false);
+  */
   // Render devices?
   if (withDevices) {
     // Raspberry 4
@@ -236,49 +179,12 @@ module stopMotionPiChassis(withDevices = false)
 
 module stopMotionPiBack(withDevices = false)
 {
+  backH = stopMotionPiBackH + stepH;
   color("silver") {
     difference() {
-      // Outer hull
-      hull() {
-        translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiBackH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiBackH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiBackH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0]) {
-          translate([0,0,-(stopMotionPiBackH-stopMotionPiT)/2])
-            donut(stopMotionPiR, stopMotionPiR-stopMotionPiT);
-          translate([0,0,stopMotionPiT/2])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-      }
-      
-      // Inner hull
-      translate([0,0,stopMotionPiT/2+0.1]) {
-        hull() {
-          translate([ stopMotionPiW/2-stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([ stopMotionPiW/2-stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR,-stopMotionPiD/2+stopMotionPiR,0])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-          translate([-stopMotionPiW/2+stopMotionPiR, stopMotionPiD/2-stopMotionPiR,0])
-            cylinder(h=stopMotionPiBackH-stopMotionPiT, r=stopMotionPiR-stopMotionPiT, center=true);
-        }
-      }
+      // Case
+      translate([0, 0, (backH - stopMotionPiBackH)/2])
+        case3PartsBack(stopMotionPiW, stopMotionPiD, backH, stopMotionPiR, stopMotionPiT);
       
       // Boreholes over Raspberry Pi boreholes
       translate([raspiOffsetX - pi3bHoleDC, -raspiOffsetY, 0]) {
@@ -288,15 +194,84 @@ module stopMotionPiBack(withDevices = false)
           boreholes(pi4bHoleX, pi4bHoleY, 2*pi4bHoleD, holeH);
       }
       
-      translate([raspiOffsetX - pi4bHoleDC + picoFanOffsetW, -raspiOffsetY - picoFanOffsetD, -stopMotionPiBackH/2 + stopMotionPiT/2])
+      translate([raspiOffsetX - pi4bHoleDC + picoFanOffsetW, -raspiOffsetY - picoFanOffsetD, -stopMotionPiBackH/2 + stopMotionPiT/2 + 0.1])
         picoFanOpening(5, 4.0);
+      
+      // Ethernet and USB A
+      connectorOffsetZ = -21;
+      rotate([180, 0, 0])
+        openings(connectorOffsetZ);
+      
+      translate([stepOffsetX, stepOffsetY, (backH)/2]) {
+        rotate([0, 180, 0])
+          triangularPrism();
+        translate([-stopMotionPiW/2 + stepH/2 - stepBottonW/2 + pcbT/2, 0, 0])
+          cube([stopMotionPiW - stepH - stepBottonW + 0.1, stopMotionPiD + 0.1, stepH + 0.1], center = true);
+      }
     }
   }
   
+  /* Check the part height
+  color("black")
+    translate([stopMotionPiW/2 - 10/2, -stopMotionPiD/2 - 10/2, -stopMotionPiBackH/2])
+      cube([10, 10, backH], center=false);
+  */
   // Render devices?
   if (withDevices) {
     
   }
+}
+
+module triangularPrism()
+{
+  // triangular prism
+  width = stepH + 0.1;
+  deep = stopMotionPiD + 0.1;
+  hight = stepH + 0.1;
+
+  translate([-width/2, -deep/2, -hight/2])
+    polyhedron(
+      points=[
+        [0, deep, 0],          // Point 0
+        [0, 0, 0],             // Point 1
+        [width, 0, 0],         // Point 2
+        [width, deep, 0],      // Point 3
+        [width, deep, hight],  // Point 4
+        [width, 0, hight]      // Point 5
+      ],
+      faces=[
+        [0,1,2,3],  // Face A
+        [5,4,3,2],  // Face B
+        [0,4,5,1],  // Face C
+        [0,3,4],    // Face D
+        [5,2,1]     // Face E
+      ]
+    );
+}
+
+module openings(connectorOffsetZ)
+{
+  // Ethernet
+  translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + ethernetOffsetD, connectorOffsetZ + ethernetSocketH/2])
+    rotate([0, 90, 0])
+      cube([ethernetSocketH + connectorSpace, ethernetSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
+  translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + ethernetOffsetD, connectorOffsetZ + ethernetSocketH/2])
+    rotate([0, 90, 0])
+      cube([ethernetSocketH + connectorSpace + plugSpace, ethernetSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
+  // 1. USB A
+  translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + usbA1OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
+    rotate([0, 90, 0])
+      cube([usbADoubleSocketH + connectorSpace, usbADoubleSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
+  translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + usbA1OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
+    rotate([0, 90, 0])
+      cube([usbADoubleSocketH + connectorSpace + plugSpace, usbADoubleSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
+  // 2. USB A
+  translate([stopMotionPiW/2 - 3*chassisT/4, raspiOffsetY + usbA2OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
+    rotate([0, 90, 0])
+      cube([usbADoubleSocketH + connectorSpace, usbADoubleSocketD + connectorSpace, chassisT/2 + 0.2], center=true);
+  translate([stopMotionPiW/2 - chassisT/4, raspiOffsetY + usbA2OffsetD, connectorOffsetZ + usbADoubleSocketH/2])
+    rotate([0, 90, 0])
+      cube([usbADoubleSocketH + connectorSpace + plugSpace, usbADoubleSocketD + connectorSpace + plugSpace, chassisT/2 + 0.2], center=true);
 }
 
 // ==============================================================================================
@@ -311,15 +286,16 @@ if(displayBack) {
   stopMotionPiBack(displayDevices);
 }
 if(displayAll) {
+  distance = 1.0;
   translate([0, 0, 0])
     rotate([0, 0, 180])
       stopMotionPiBack(false);
 
-  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH/2 + 1])
+  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH/2 + distance])
     rotate([0, 180, 0])
       stopMotionPiChassis(displayDevices);
 
-  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH + stopMotionPiFrontH/2 + 2])
+  translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH + stopMotionPiFrontH/2 + 2*distance])
     rotate([0, 180, 0])
       stopMotionPiFront(displayDevices);
 }

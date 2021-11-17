@@ -14,10 +14,10 @@ use <../parts/Parts.scad>
 // Which one would you like to see?
 displayOpening = false;
 displayBoreholes = false;
-displayPi3bOpening = false;
+displayPi3bOpening = true;
 displayPi3HatOpening = false;
 displayPi4bOpening = false;
-displayPi4HatOpening = true;
+displayPi4HatOpening = false;
 displayCameraHqOpening = false;
 displayHolesOnCircle = false;
 
@@ -63,7 +63,7 @@ module boreholes(distanceX, distanceY, diameter, hight)
     cylinder(h=hight+0.1, d=diameter, center=true);
 }
 
-// RaspberryPi opening
+// RaspberryPi 3b opening
 module pi3bOpening(chassisT, space = 2.0)
 {
   opening(pi3bPcbW + 2*space, 42.0, chassisT);
@@ -100,57 +100,88 @@ module pi3bOpening(chassisT, space = 2.0)
   // Boreholes
   translate([-pi3bHoleDC, 0, 0])
     boreholes(pi3bHoleX, pi3bHoleY, pi3bHoleD, chassisT);
+  
+  color("black") {
+    cube([pi3bPcbW, 4, 6], center = true);
+    cube([4, pi3bPcbD, 6], center = true);
+  }
 }
 
-// HAT module opening
+// Raspberry Pi 3 HAT module opening
 module pi3HatOpening(chassisT, space = 2.0)
 {
-  opening(pi3HatPcbW + 2*space, 40, chassisT);
+  openY = 2*pi3HatHoleY - pi3HatPcbD;
+  openY1 = pi3HatHoleY - openY + space;
+  openX = pi3HatPcbW + 2*space;
+  
+  opening(openX, openY, chassisT);
 
-  openX = pi3bHoleX - 8.0;
-  openY = 10.0 + 2*space;
-  posY = 22.0;
-  translate([0, -posY, 0]) {
-    opening(openX, openY, chassisT);
-  }
+  openX1 = pi3HatHoleX - openY1;
+  posY = openY/2 + openY1/2;
+
   translate([0, posY, 0]) {
-    opening(openX, openY, chassisT);
+    opening(openX1, openY1, chassisT);
+  }
+  translate([0, openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([0, -openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([0, -posY, 0]) {
+    opening(openX1, openY1, chassisT);
   }
 
   // Boreholes
   boreholes(pi3bHoleX, pi3bHoleY, pi3bHoleD, chassisT);
 }
 
-// RaspberryPi opening
+// RaspberryPi 4b opening
 module pi4bOpening(chassisT, space = 2.0)
 {
-  opening(pi4bPcbW + 2*space, 42.0, chassisT);
+  openY = 2*pi4bHoleY - pi4bPcbD;
+  openY1 = pi4bHoleY - openY + space;
+  openX = pi4bPcbW + 2*space;
+  
+  opening(openX, openY, chassisT);
 
-  openX1 = pi4bHoleX - 8.0;
-  openY = 10.0 + 2*space;
-  posX1 = -10.0;
-  posY = 22.0;
+  openX1 = pi4bHoleX - openY1;
+  posX1 = -pi4bHoleDC;
+  posY = openY/2 + openY1/2;
 
-  translate([posX1,-posY, 0]) {
-    opening(openX1, openY, chassisT);
-  }
   translate([posX1, posY, 0]) {
-    opening(openX1, openY, chassisT);
+    opening(openX1, openY1, chassisT);
+  }
+  translate([posX1, openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([posX1, -openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([posX1, -posY, 0]) {
+    opening(openX1, openY1, chassisT);
   }
 
-  openX2 = pi4bPcbW - pi4bHoleX + space - 8.0;
-  posX2 = 33.0 + space/2;
-  translate([posX2, -posY, 0]) {
-    opening(openX2, openY, chassisT);
-  }
+  openX2 = pi4bPcbW - pi4bHoleX - openY1 + space;
+  posX2 = pi4bPcbW/2 - openX2/2 + space;
+  
   translate([posX2, posY, 0]) {
-    opening(openX2, openY, chassisT);
+    opening(openX2, openY1, chassisT);
+  }
+  translate([posX2, openY/2, 0]) {
+    cube([openX2, 4.0, chassisT+0.1], center = true);
+  }
+  translate([posX2, -openY/2, 0]) {
+    cube([openX2, 4.0, chassisT+0.1], center = true);
+  }
+  translate([posX2, -posY, 0]) {
+    opening(openX2, openY1, chassisT);
   }
 
   // Opening for microSD card
   openX3 = 12.0;
   openY3 = 20.0;
-  posX3 = -(pi4bPcbW + openX3)/2 + 1.0;
+  posX3 = -(pi4bPcbW + openX3)/2 + 2.0;
   translate([posX3, 0, 0]) {
     opening(openX3, openY3, chassisT);
   }
@@ -160,23 +191,33 @@ module pi4bOpening(chassisT, space = 2.0)
     boreholes(pi4bHoleX, pi4bHoleY, pi4bHoleD, chassisT);
 }
 
-// HAT module opening
+// Raspberry Pi 4 HAT module opening
 module pi4HatOpening(chassisT, space = 2.0)
 {
-  opening(pi3HatPcbW + 2*space, 40, chassisT);
+  openY = 2*pi4HatHoleY - pi4HatPcbD;
+  openY1 = pi4HatHoleY - openY + space;
+  openX = pi4HatPcbW + 2*space;
+  
+  opening(openX, openY, chassisT);
 
-  openX = pi3bHoleX - 8.0;
-  openY = 10.0 + 2*space;
-  posY = 22.0;
-  translate([0, -posY, 0]) {
-    opening(openX, openY, chassisT);
-  }
+  openX1 = pi4HatHoleX - openY1;
+  posY = openY/2 + openY1/2;
+
   translate([0, posY, 0]) {
-    opening(openX, openY, chassisT);
+    opening(openX1, openY1, chassisT);
+  }
+  translate([0, openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([0, -openY/2, 0]) {
+    cube([openX1, 4.0, chassisT+0.1], center = true);
+  }
+  translate([0, -posY, 0]) {
+    opening(openX1, openY1, chassisT);
   }
 
   // Boreholes
-  boreholes(pi3bHoleX, pi3bHoleY, pi3bHoleD, chassisT);
+  boreholes(pi4bHoleX, pi4bHoleY, pi4bHoleD, chassisT);
 }
 
 module cameraHqOpening(chassisT)
@@ -243,12 +284,12 @@ if (displayBoreholes == true) {
 if (displayPi3bOpening == true) {
   $fn=100;
 
-  pi3bOpening(5, 2);
+  pi3bOpening(5, 0);
 }
 if (displayPi3HatOpening == true) {
   $fn=100;
 
-  pi3HatOpening(5, 2);
+  pi3HatOpening(5, 0);
 }
 if (displayPi4bOpening == true) {
   $fn=100;

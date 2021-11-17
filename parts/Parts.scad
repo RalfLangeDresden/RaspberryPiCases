@@ -21,9 +21,9 @@ displayHdmiSocket = false;             // HDMI socket
 displayHdmiPlug = false;               // HDMI plug
 displayHdmiMiniSocket = false;         // HDMI mini socket
 displayHdmiMicroSocket = false;        // HDMI micro socket
-displayAudioSocket = false;            // Audio socket
+displayAudioSocket = true;            // Audio socket
 displayConnectorRibbonVertical = false; // Ribbon cable connector (22mm)
-displayConnectorRibbonHorizontal = true; // Ribbon cable connector (17mm)
+displayConnectorRibbonHorizontal = false; // Ribbon cable connector (17mm)
 displayMicroSDCardSlot = false;        // Micro SD card slot
 displayBcm2837 = false;                // Broadcom BCM2837, Cortex-A53 (ARMv8) 64-bit SoC @ 1.4GHz
 displayBcm2711 = false;                // Broadcom BCM2711, Quad core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz
@@ -42,7 +42,6 @@ displayScrewNut = false;               // Screw nut
 displayBlockBoltHead = false;          // Block bolt hesd
 displayChinch = false;                 // Chench socket
 displaySdrStick = false;               // SDR USB Stick
-displayDonut = false;                  // An "donut" for angles
 displayLipo2500 = false;               // LIPO785060
 displayAccuNCR18650B = false;          // Accu NCR 18650 B
 displayXxx = false;
@@ -130,10 +129,10 @@ module usbASocketDouble(detail = 1)
         cube([usbADoubleSocketW, usbADoubleSocketD, usbADoubleSocketH], center=true);
       translate([1.0, 0, (5.31 + 3.45)/2])
         color("black")
-          cube([15.1, 11, 5.31], center=true);
+          cube([15.1, 12.6, 5.31], center=true);
       translate([1.0, 0, -(5.31 + 3.45)/2])
         color("black")
-          cube([15.1, 11, 5.31], center=true);
+          cube([15.1, 12.6, 5.31], center=true);
       translate([-3, 0, usbADoubleSocketH/2 - 0.5])
         rotate([0, 0, 90])
           linear_extrude(height=0.6)
@@ -152,46 +151,44 @@ module usbASocketDouble(detail = 1)
 
 module usbMicroSocket(detail = 1)
 {
-  translate([0, 0, pcbT/2+2.6/2]) {
+  translate([0, 0, pcbT/2 + usbMicroSocketH/2]) {
     difference() {
       color("silver")
         cube([usbMicroSocketW, usbMicroSocketD, usbMicroSocketH], center=true);
-      translate([1, 0, 0]) {
-        color("black")
-          hull() {
-            // cube([4.1, 7, 1.6], center=true);
-            translate([0, 0, 0.4])
-              cube([4.1, 7, 1.0], center=true);
-            translate([0, 0, -0.6])
-              cube([4.1, 5, 0.6], center=true);
-          }
+      color("black") {
+        hull() {
+          translate([0.5, 0, usbMicroTrapezeH/2])
+            cube([usbMicroSocketW - 0.9, usbMicroPlugD, usbMicroPlugH - usbMicroTrapezeH], center=true);
+          translate([0.5, 0, -(usbMicroPlugH - usbMicroTrapezeH)/2])
+            cube([usbMicroSocketW - 0.9, usbMicroPlugD - 2.0, usbMicroTrapezeH], center=true);
+        }
       }
     }
-    translate([1, 0, 0.2]) {
+    translate([0.5, 0, 0.2]) {
       color("white")
-        cube([4.1, 4, 0.4], center=true);
+        cube([usbMicroSocketW - 0.9, usbMicroPlugD - 2.0, 0.4], center=true);
     }
   }
 }
 
 module hdmiSocket(detail = 1)
 {
-  translate([0, 0, pcbT/2+hdmiSocketH/2]) {
+  translate([0, 0, pcbT/2 + hdmiSocketH/2]) {
     difference() {
       color("silver")
         cube([hdmiSocketW, hdmiSocketD, hdmiSocketH], center=true);
       color("black") {
         hull() {
           translate([0.5, 0, hdmiTrapezeH/2])
-            cube([hdmiSocketW-0.9, hdmiPlugD, hdmiPlugH-hdmiTrapezeH], center=true);
-          translate([0.5, 0, -(hdmiPlugH-hdmiTrapezeH)/2])
-            cube([hdmiSocketW-0.9, hdmiPlugD-2, hdmiTrapezeH], center=true);
+            cube([hdmiSocketW - 0.9, hdmiPlugD, hdmiPlugH - hdmiTrapezeH], center=true);
+          translate([0.5, 0, -(hdmiPlugH - hdmiTrapezeH)/2])
+            cube([hdmiSocketW - 0.9, hdmiPlugD - 2.0, hdmiTrapezeH], center=true);
         }
       }
     }
     translate([0.5, 0, 0.4]) {
       color("white")
-        cube([hdmiSocketW-0.9, 12, 1], center=true);
+        cube([hdmiSocketW - 0.9, hdmiPlugD - 2.0, 1], center=true);
     }
     // translate([0, 15, 0]) {
     //   hdmiPlug();
@@ -205,36 +202,36 @@ module hdmiPlug(detail = 1)
     color("silver") {
       hull() {
         translate([0, 0, hdmiTrapezeH/2])
-          cube([hdmiPlugW, hdmiPlugD, hdmiPlugH-hdmiTrapezeH], center=true);
-        translate([0, 0, -(hdmiPlugH-hdmiTrapezeH)/2])
-          cube([hdmiPlugW, hdmiPlugD-2, hdmiTrapezeH], center=true);
+          cube([hdmiPlugW, hdmiPlugD, hdmiPlugH - hdmiTrapezeH], center=true);
+        translate([0, 0, -(hdmiPlugH - hdmiTrapezeH)/2])
+          cube([hdmiPlugW, hdmiPlugD - 2.0, hdmiTrapezeH], center=true);
       }
     }
     translate([1, 0, 0.4]) {
       color("black")
-        cube([hdmiPlugW, hdmiPlugD-2,1], center=true);
+        cube([hdmiPlugW, hdmiPlugD - 2.0, 1], center=true);
     }
   }
 }
 
 module hdmiMiniSocket(detail = 1)
 {
-  translate([0, 0, pcbT/2+hdmiMiniSocketH/2]) {
+  translate([0, 0, pcbT/2 + hdmiMiniSocketH/2]) {
     difference() {
       color("silver")
-        cube([hdmiMiniSocketW,hdmiMiniSocketD,hdmiMiniSocketH], center=true);
+        cube([hdmiMiniSocketW, hdmiMiniSocketD, hdmiMiniSocketH], center=true);
       color("black") {
         hull() {
           translate([0.5, 0, hdmiMiniTrapezeH/2])
-            cube([hdmiMiniSocketW-0.9, hdmiMiniPlugD, hdmiMiniPlugH-hdmiMiniTrapezeH], center=true);
+            cube([hdmiMiniSocketW-0.9, hdmiMiniPlugD, hdmiMiniPlugH - hdmiMiniTrapezeH], center=true);
           translate([0.5, 0, -(hdmiMiniPlugH-hdmiMiniTrapezeH)/2])
-            cube([hdmiMiniSocketW-0.9, hdmiMiniPlugD-2, hdmiMiniTrapezeH], center=true);
+            cube([hdmiMiniSocketW - 0.9, hdmiMiniPlugD - 2.0, hdmiMiniTrapezeH], center=true);
         }
       }
     }
-    translate([0.5,0,0.2]) {
+    translate([0.5, 0, 0.2]) {
       color("white")
-        cube([hdmiMiniSocketW-0.9, 8.1, 0.58], center=true);
+        cube([hdmiMiniSocketW - 0.9, hdmiMiniPlugD - 2.0, 0.58], center=true);
     }
     // translate([0, 15, 0]) {
     //   hdmiMiniPlug();
@@ -244,22 +241,22 @@ module hdmiMiniSocket(detail = 1)
 
 module hdmiMicroSocket(detail = 1)
 {
-  translate([0, 0, pcbT/2+hdmiMicroSocketH/2]) {
+  translate([0, 0, pcbT/2 + hdmiMicroSocketH/2]) {
     difference() {
       color("silver")
-        cube([hdmiMicroSocketW,hdmiMicroSocketD,hdmiMicroSocketH], center=true);
+        cube([hdmiMicroSocketW, hdmiMicroSocketD, hdmiMicroSocketH], center=true);
       color("black") {
         hull() {
           translate([0.5, 0, hdmiMicroTrapezeH/2])
-            cube([hdmiMicroSocketW-0.9, hdmiMicroPlugD, hdmiMicroPlugH-hdmiMicroTrapezeH], center=true);
+            cube([hdmiMicroSocketW - 0.9, hdmiMicroPlugD, hdmiMicroPlugH - hdmiMicroTrapezeH], center=true);
           translate([0.5, 0, -(hdmiMiniPlugH-hdmiMicroTrapezeH)/2])
-            cube([hdmiMicroSocketW-0.9, hdmiMicroPlugD-1, hdmiMicroTrapezeH], center=true);
+            cube([hdmiMicroSocketW - 0.9, hdmiMicroPlugD - 1.0, hdmiMicroTrapezeH], center=true);
         }
       }
     }
     translate([0.5, 0, 0]) {
       color("white")
-        cube([hdmiMicroSocketW-0.9, 4.3, 0.6], center=true);
+        cube([hdmiMicroSocketW - 0.9, hdmiMicroPlugD - 1.0, 0.6], center=true);
     }
     // translate([0, 15, 0]) {
     //   hdmiMicroPlug();
@@ -269,15 +266,15 @@ module hdmiMicroSocket(detail = 1)
 
 module audioSocket(detail = 1)
 {
-  translate([0, 0, pcbT/2+5.6/2]) {
+  translate([0, 0, pcbT/2 + audioSocketH/2]) {
     difference() {
       color("darkgrey") {
         cube([audioSocketW, audioSocketD, audioSocketH], center=true);
-        translate([13/2+2/2, 0, 0])
+        translate([audioSocketW/2 + 2.8/2, 0, 0])
           rotate([0, 90, 0])
-            cylinder(r=audioSocketR, h=2, center=true);
+            cylinder(r=audioSocketR, h=2.8, center=true);
       }
-      translate([5.5, 0, 0])
+      translate([audioSocketW/2 + 6.1/2 + 0.1, 0, 0])
         color("black")
           rotate([0, 90, 0])
             cylinder(d=3.5, h=6.1, center=true);
@@ -743,15 +740,6 @@ module sdrStick2()
       cube([13.7,12.0,4.5], center=true);
 }
 
-module donut(outerR=5, innerR=3)
-{
-  circleR = (outerR-innerR)/2;
-
-  rotate_extrude(convexity = 10)
-    translate([outerR-circleR, 0, 0])
-      circle(r = circleR);
-}
-
 module lipo2500()
 {
   color("black")
@@ -866,9 +854,6 @@ if(displayChinch) {
 }
 if(displaySdrStick) {
   sdrStick2();
-}
-if(displayDonut) {
-  donut();
 }
 if(displayLipo2500) {
   lipo2500();
