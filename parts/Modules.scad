@@ -13,7 +13,6 @@ use <Parts.scad>
 displayAdafruit3548 = false;         // HDMI plug
 displayAdafruit3549 = false;         // HDMI plug 90 degree
 displaySdrStick = false;             // SDR USB Stick
-displayDonut = false;                // An "donut" for angles
 displayLipo2500 = false;             // LIPO785060
 displayXxx = false;
 
@@ -133,15 +132,6 @@ module sdrStick2()
       cube([13.7,12.0,4.5], center=true);
 }
 
-module donut(outerR=5, innerR=3)
-{
-  circleR = (outerR-innerR)/2;
-
-  rotate_extrude(convexity = 10)
-    translate([outerR-circleR, 0, 0])
-      circle(r = circleR);
-}
-
 module lipo2500()
 {
   color("black")
@@ -158,9 +148,6 @@ if(displayAdafruit3549) {
 }
 if(displaySdrStick) {
   sdrStick2();
-}
-if(displayDonut) {
-  donut();
 }
 if(displayLipo2500) {
   lipo2500();

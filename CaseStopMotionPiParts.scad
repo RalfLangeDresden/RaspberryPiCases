@@ -58,53 +58,8 @@ module stopMotionPiFront(withDevices = false)
   
   color("silver") {
     difference() {
-      donutZ = -(stopMotionPiFrontH - stopMotionPiT)/2;
-      // Outer hull
-      hull() {
-        donutInnerR = stopMotionPiR - stopMotionPiT;
-        cylinderZ = stopMotionPiFrontH/2 - stopMotionPiT/2;
-        translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR,0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([stopMotionPiW/2 - stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR,0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2 + stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR,0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR,0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-      }
-      
-      // Inner hull
-      translate([0, 0, stopMotionPiT/2 + 0.1]) {
-        hull() {
-          cylinderH = stopMotionPiFrontH - stopMotionPiT;
-          cylinderZ = cylinderH/2 + donutZ + 0.1;
-          cylinderR = stopMotionPiR - stopMotionPiT;
-          translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([stopMotionPiW/2 - stopMotionPiR,-stopMotionPiD/2 + stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR,-stopMotionPiD/2 + stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-        }
-      }
+      // Case
+      case3PartsFront(stopMotionPiW, stopMotionPiD, stopMotionPiFrontH, stopMotionPiR, stopMotionPiT);
       
       // Camera pcb
       translate([cameraOffsetX, cameraOffsetY, cameraOffsetZ])
@@ -142,33 +97,8 @@ module stopMotionPiChassis(withDevices = false)
 
   color("silver") {
     difference() {
-      // Outer hull
-      hull() {
-        translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([stopMotionPiW/2 - stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([-stopMotionPiW/2 + stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-        translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR,0])
-          cylinder(h=stopMotionPiChassisH, r=stopMotionPiR, center=true);
-      }
-      
-      // Inner hull
-      translate([0, 0, chassisT - chassisT/2]) {
-        hull() {
-          cylinderH = stopMotionPiChassisH - chassisT + 0.1;
-          cylinderR = stopMotionPiR - stopMotionPiT;
-          translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, 0])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([stopMotionPiW/2 - stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, 0])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, 0])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, 0])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-        }
-      }
+      // Case
+      case3PartsChassis(stopMotionPiW, stopMotionPiD, stopMotionPiChassisH, stopMotionPiR, stopMotionPiT, chassisT);
       
       // Opening and boreholes for Raspberry Pi
       translate([raspiOffsetX, raspiOffsetY, raspiOpeningZ])
@@ -252,53 +182,9 @@ module stopMotionPiBack(withDevices = false)
   backH = stopMotionPiBackH + stepH;
   color("silver") {
     difference() {
-      donutZ = -(stopMotionPiBackH - stopMotionPiT)/2;
-      // Outer hull
-      hull() {
-        donutInnerR = stopMotionPiR - stopMotionPiT;
-        cylinderZ = backH - stopMotionPiBackH/2 - stopMotionPiT/2;
-        translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, 0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([stopMotionPiW/2 - stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, 0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2 + stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, 0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-        translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, 0]) {
-          translate([0, 0, donutZ])
-            donut(stopMotionPiR, donutInnerR);
-          translate([0, 0, cylinderZ])
-            cylinder(h=stopMotionPiT, r=stopMotionPiR, center=true);
-        }
-      }
-      
-      // Inner hull
-      translate([0, 0, stopMotionPiT/2]) {
-        hull() {
-          cylinderH = backH - stopMotionPiT;
-          cylinderZ = cylinderH/2 + donutZ + 0.1;
-          cylinderR = stopMotionPiR - stopMotionPiT;
-          translate([stopMotionPiW/2 - stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([stopMotionPiW/2 - stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR, -stopMotionPiD/2 + stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-          translate([-stopMotionPiW/2 + stopMotionPiR, stopMotionPiD/2 - stopMotionPiR, cylinderZ])
-            cylinder(h=cylinderH, r=cylinderR, center=true);
-        }
-      }
+      // Case
+      translate([0, 0, (backH - stopMotionPiBackH)/2])
+        case3PartsBack(stopMotionPiW, stopMotionPiD, backH, stopMotionPiR, stopMotionPiT);
       
       // Boreholes over Raspberry Pi boreholes
       translate([raspiOffsetX - pi3bHoleDC, -raspiOffsetY, 0]) {

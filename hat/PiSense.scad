@@ -14,12 +14,12 @@ use <../raspberry/PiParts.scad>
 use <../parts/Parts.scad>
 
 // Which one would you like to see?
-displayTemplate = true;    // Template
+displayPiSense = true;    // Template
 
 // Show Header
 header = true; // true: Show Header; false:Don't show Header
 
-module template(withHeader=false)
+module piSense(withHeader=false)
 {
   pi3HatPcb(true, true);
   
@@ -75,8 +75,8 @@ module template(withHeader=false)
 
 }
 
-if(displayTemplate == true) {
+if(displayPiSense == true) {
   $fn=100;
 
-  template(header);
+  piSense(header);
 }
