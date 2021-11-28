@@ -8,27 +8,25 @@
 // Include the constants with the dimensions
 // and the special variables
 include <Case7Constants_V3.scad>;
-include <raspberry/PiPcbConstants.scad>;
-include <raspberry/PiPartConstants.scad>;
-include <parts/Display7Constants.scad>;
+include <../raspberry/PiPcbConstants.scad>;
+include <../raspberry/PiPartConstants.scad>;
+include <../parts/Display7Constants.scad>;
 
-use <parts/CaseParts.scad>
-use <parts/Parts.scad>
-use <parts/Display7Board.scad>
-use <parts/Modules.scad>
-use <raspberry/Pi3Boards.scad>
-use <raspberry/PiPcbs.scad>
-use <raspberry/PiOpenings.scad>;
-use <raspberry/PiParts.scad>;
-use <hat/HifiBerry.scad>
-use <hat/PiUsvPlus.scad>
+use <../parts/CaseParts.scad>
+use <../parts/Parts.scad>
+use <../parts/Display7Board.scad>
+use <../raspberry/Pi3Boards.scad>
+use <../raspberry/PiOpenings.scad>;
+use <../raspberry/PiParts.scad>;
+use <../hat/HifiBerry.scad>
+use <../hat/PiUsvPlus.scad>
 
 // Which one would you like to see?
 displayFront = false;         // Front part of the case
 displayChassis = false;       // Chassis part of the case
 displayBack = false;          // Back part of the case
-displayAll = false;           // All parts together
-displayImage = true;         // All parts together in one image
+displayAll = true;           // All parts together
+displayImage = false;         // All parts together in one image
 
 displayDevices = false;
 withThread = false;
@@ -473,7 +471,7 @@ if(displayBack) {
   case7back(displayDevices);
 }
 if(displayAll) {
-  rotate([0,180,0])
+  rotate([0,0,0])
     case7back(false);
 
   translate([0,0,case7BackH/2 + case7ChassisH/2 + 1])
