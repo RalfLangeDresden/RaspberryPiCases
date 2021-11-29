@@ -19,10 +19,8 @@ display7BlackBorder = 1.50;   // Black border arround the touch display (D3,D7,D
 
 display7BlackGlasDeltaXP = 5.68;   // Distance black border to glas border on positive X axis (D5,D6)
 display7BlackGlasDeltaXN = display7GlasW-display7W-2*display7BlackBorder-display7BlackGlasDeltaXP; // Distance black border to glas border on negative X axis
-echo("Black glas delta XN: ", display7BlackGlasDeltaXN);
 display7BlackGlasDeltaYP = 1.90;   // Distance black border to glas border on positive Y axis (D9)
 display7BlackGlasDeltaYN = display7GlasD-display7D-2*display7BlackBorder-display7BlackGlasDeltaYP; // Distance black border to glas border on negative Y axis
-echo("Black glas delta YN: ", display7BlackGlasDeltaYN);
 display7TouchGlasDeltaZ = 0.2;  // Distance touch panal over glas
 
 // Printed circuit board

@@ -8,28 +8,25 @@
 // Include the constants with the dimensions
 // and the special variables
 include <CaseStopMotionPiConstants.scad>;
-include <raspberry/PiPcbConstants.scad>;
-include <raspberry/PiPartConstants.scad>;
-include <raspberry/Pi4Constants.scad>;
-include <parts/Display7Constants.scad>;
-include <parts/PartConstants.scad>;
-include <hat/PiModulesConstants.scad>
+include <../raspberry/PiPcbConstants.scad>;
+include <../raspberry/PiPartConstants.scad>;
+include <../raspberry/Pi4Constants.scad>;
+include <../parts/PartConstants.scad>;
+include <../hat/PiModulesConstants.scad>
 
-use <parts/CaseParts.scad>
-use <parts/Parts.scad>
-use <parts/Modules.scad>
-use <raspberry/Pi4Boards.scad>
-use <raspberry/PiPcbs.scad>
-use <raspberry/PiOpenings.scad>;
-use <raspberry/PiCameraBoards.scad>;
-use <hat/PiModules.scad>
+use <../parts/CaseParts.scad>
+use <../raspberry/Pi4Boards.scad>
+use <../raspberry/PiOpenings.scad>;
+use <../raspberry/PiCameraBoards.scad>;
+use <../hat/PiModules.scad>
 
 // Which one would you like to see?
 displayFront = false;         // Front part of the case
 displayChassis = false;       // Chassis part of the case
 displayBack = false;          // Back part of the case
-displayAll = false;           // All parts together
-displayImage = true;         // All parts together in one image
+displayLogo = false;          // Logo part of the case
+displayAll = true;           // All parts together
+displayImage = false;         // All parts together in one image
 
 displayDevices = false;
 withThread = false;
@@ -49,6 +46,7 @@ stepOffsetZ = stopMotionPiT/2 + pcbT/2;
 holeH = 2.0;
 connectorSpace = 0.4;
 plugSpace = 2.0;
+logoOffsetX = 40.0;
 
 module stopMotionPiFront(withDevices = false)
 {
@@ -198,7 +196,7 @@ module stopMotionPiBack(withDevices = false)
         picoFanOpening(5, 4.0);
       
       // Ethernet and USB A
-      connectorOffsetZ = -21;
+      connectorOffsetZ = -24.5;
       rotate([180, 0, 0])
         openings(connectorOffsetZ);
       
@@ -208,6 +206,11 @@ module stopMotionPiBack(withDevices = false)
         translate([-stopMotionPiW/2 + stepH/2 - stepBottonW/2 + pcbT/2, 0, 0])
           cube([stopMotionPiW - stepH - stepBottonW + 0.1, stopMotionPiD + 0.1, stepH + 0.1], center = true);
       }
+      
+      // Logo opening
+      translate([logoOffsetX, 0, -stopMotionPiBackH/2 + stopMotionPiT])
+        rotate([0, 180, 90])
+          stopMotionPiLogo();
     }
   }
   
@@ -219,6 +222,21 @@ module stopMotionPiBack(withDevices = false)
   // Render devices?
   if (withDevices) {
     
+  }
+}
+
+module stopMotionPiLogo()
+{
+  openingW = 50.0;
+  openingD = 10.0;
+  
+  color("silver")
+    opening(openingW, openingD, chassisT);
+  
+  translate([0, 0, chassisT/2]) {
+    color("black")
+      linear_extrude(height=chassisT)
+        text("stopMotionPi", size=5, halign="center", valign="center", font = "Liberation Sans:style=Bold Italic");
   }
 }
 
@@ -285,6 +303,9 @@ if(displayChassis) {
 if(displayBack) {
   stopMotionPiBack(displayDevices);
 }
+if(displayLogo) {
+  stopMotionPiLogo();
+}
 if(displayAll) {
   distance = 1.0;
   translate([0, 0, 0])
@@ -298,9 +319,13 @@ if(displayAll) {
   translate([0, 0, stopMotionPiBackH/2 + stopMotionPiChassisH + stopMotionPiFrontH/2 + 2*distance])
     rotate([0, 180, 0])
       stopMotionPiFront(displayDevices);
+
+  translate([-logoOffsetX, 0, -stopMotionPiBackH/2 + chassisT])
+    rotate([0, 180, -90])
+      stopMotionPiLogo();
 }
 if(displayImage) {
-  translate([(stopMotionPiD+10), 0, 0])
+  translate([-(stopMotionPiD + 10.0), 0, 0])
     rotate([0, 0, 90])
       stopMotionPiBack(false);
 
@@ -308,7 +333,11 @@ if(displayImage) {
     rotate([0, 0, 90])
       stopMotionPiChassis(false);
 
-  translate([-(stopMotionPiD+10), 0, 0])
+  translate([stopMotionPiD + 10.0, 0, 0])
     rotate([0, 0, 90])
       stopMotionPiFront(false);
+
+  translate([-(stopMotionPiD + 10.0), -(stopMotionPiW/2 + 10.0), 0])
+    rotate([0, 0, 0])
+      stopMotionPiLogo();
 }

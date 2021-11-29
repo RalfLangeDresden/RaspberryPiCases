@@ -7,18 +7,18 @@
 // Include the constants with the dimensions
 // and the special variables
 include <Case7Constants_V1.scad>;
-include <parts/Display7Constants.scad>;
+include <../parts/Display7Constants.scad>;
 
-use <parts/Parts.scad>
-use <parts/Display7Board.scad>
-use <raspberry/Pi3Boards.scad>
+use <../parts/Parts.scad>
+use <../parts/Display7Board.scad>
+use <../raspberry/Pi3Boards.scad>
 
 // Which one would you like to see?
 displayFront = false;         // Front part of the case
 displayChassis = false;       // Chassis part of the case
 displayBack = false;          // Back part of the case
-displayAll = false;           // All parts together
-displayImage = true;         // All parts together in one image
+displayAll = true;           // All parts together
+displayImage = false;         // All parts together in one image
 
 // Display printed ciruits board position
 displayOffsetX = (case7W-display7PcbW-2*case7T-2*case7displayXP)/2;
@@ -28,7 +28,7 @@ echo("Display offset Y: ", displayOffsetY);
 displayOffsetZ = 0;
 echo("Display offset Z: ", displayOffsetZ);
 
-displayDevices = true;
+displayDevices = false;
 withThread = false;
 
 module case7front(withDevices = false)
