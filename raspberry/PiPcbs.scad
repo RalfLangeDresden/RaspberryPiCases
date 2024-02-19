@@ -1,6 +1,7 @@
 // ==================================================
 // Raspberry Pi and HAT printed circuit boards
 // (c) Ralf Lange, longsoft.de
+// Last update: 2024-02-19
 // ==================================================
 
 // External definitions
@@ -24,7 +25,8 @@ displayPi4Boreholes = false;     // Raspberry PI 4 Boreholes
 displayPi4b = false;             // Raspberry PI4 Model B board
 displayPiPicoBoreholes = false;  // Raspberry PI Pico Boreholes
 displayPiPico = false;           // Raspberry PI Pico board
-displayPiCameraV2 = true;       // Raspberry PI Camera board V2
+displayPiCameraV2 = false;       // Raspberry PI Camera board V2
+displayPiCameraV3 = true;       // Raspberry PI Camera board V3
 displayPiCameraHQ = false;       // Raspberry PI Camera beard HD
 displayImage = false;            // Display a image with all boards
 
@@ -317,6 +319,28 @@ module piCameraV2Pcb()
     }
 }
 
+module piCameraV3Pcb()
+{
+  // PCB
+  color("yellow")
+    difference() {
+      hull() {
+        translate([-piCameraV3PcbW/2+piCameraV3PcbR, -piCameraV3PcbD/2+piCameraV3PcbR, 0])
+          cylinder(r=piCameraV3PcbR, h=pcbT, center=true);
+        translate([-piCameraV3PcbW/2+piCameraV3PcbR,  piCameraV3PcbD/2-piCameraV3PcbR, 0])
+          cylinder(r=piCameraV3PcbR, h=pcbT, center=true);
+        translate([ piCameraV3PcbW/2-piCameraV3PcbR, -piCameraV3PcbD/2+piCameraV3PcbR, 0])
+          cylinder(r=piCameraV3PcbR, h=pcbT, center=true);
+        translate([ piCameraV3PcbW/2-piCameraV3PcbR,  piCameraV3PcbD/2-piCameraV3PcbR, 0])
+          cylinder(r=piCameraV3PcbR, h=pcbT, center=true);
+      }
+      
+      // Boreholes
+      translate([-piCameraV3HoleDC, 0, 0])
+        boreholes(piCameraV3HoleX, piCameraV3HoleY, piCameraV3HoleD, pcbT);
+    }
+}
+
 module piCameraHqPcb()
 {
   // PCB
@@ -398,6 +422,11 @@ if (displayPiCameraV2 == true) {
   $fn=100;
 
   piCameraV2Pcb();
+}
+if (displayPiCameraV3 == true) {
+  $fn=100;
+
+  piCameraV3Pcb();
 }
 if (displayPiCameraHQ == true) {
   $fn=100;

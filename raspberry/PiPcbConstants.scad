@@ -2,6 +2,7 @@
 // Raspberry Pi and pi3Hat printed circuit boards
 // Constant definitions
 // (c) Ralf Lange, longsoft.de
+// Last update: 2024-02-19
 // ==================================================
 
 // Dimensions Raspberry Zero
@@ -110,6 +111,20 @@ piCameraV2HoleD = 2.2;      // Hole diameter (2.2 mm)
 piCameraV2OffsetW = 1.245;  // Ribbon offset width
 piCameraV2OffsetX = (piCameraV2PcbW - piCameraV2OffsetW)/2; // Ribbon connector offset on x axis
 piCameraV2OffsetY = 0.0;    // Ribbon opening offset on y axis
+
+// Dimensions Raspberry Camera Module V3
+
+piCameraV3PcbW = 23.862;    // Printed circuit board width (23.862 mm)
+piCameraV3PcbD = 25;        // Printed circuit board depth (25 mm)
+piCameraV3PcbH = 11.3;      // Printed circuit board hight (5 mm)
+piCameraV3PcbR = 2;         // Printed circuit board corner radius (2 mm)
+piCameraV3HoleX = 12.5;     // Centred hole distance on X axis (12.5 mm)
+piCameraV3HoleY = 21;       // Centred hole distance on Y axis (21 mm)
+piCameraV3HoleDC = (piCameraV3PcbW - piCameraV3HoleX - 2 * piCameraV3PcbR) / 2; // Distance between hole center and PCB center
+piCameraV3HoleD = 2.2;      // Hole diameter (2.2 mm)
+piCameraV3OffsetW = 1.245;  // Ribbon offset width
+piCameraV3OffsetX = (piCameraV3PcbW - piCameraV3OffsetW)/2; // Ribbon connector offset on x axis
+piCameraV3OffsetY = 0.0;    // Ribbon opening offset on y axis
 
 // Dimensions Raspberry Camera module HQ
 

@@ -12,9 +12,9 @@ include <../parts/PartConstants.scad>
 use <../parts/Parts.scad>
 
 // Which one would you like to see?
-displayOpening = false;
+displayOpening = true;
 displayBoreholes = false;
-displayPi3bOpening = true;
+displayPi3bOpening = false;
 displayPi3HatOpening = false;
 displayPi4bOpening = false;
 displayPi4HatOpening = false;
@@ -28,7 +28,15 @@ cornerR = 2.0;
 
 module opening(width, deap, chassisT)
 {
-  if (deap < 2*cornerR) {
+  if (width < 2*cornerR) {
+    hull() {
+      translate([0, deap/2 - width/2, 0])
+        cylinder(h=chassisT+0.1, d=width, center=true);
+      translate([0, -deap/2 + width/2, 0])
+        cylinder(h=chassisT+0.1, d=width, center=true);
+    }
+  }
+  else if (deap < 2*cornerR) {
     hull() {
       translate([ width/2 - deap/2, 0, 0])
         cylinder(h=chassisT+0.1, d=deap, center=true);
@@ -274,7 +282,14 @@ module holesOnCircle(holeD, holeH, circleD, number)
 if (displayOpening == true) {
   $fn=100;
 
-  opening(30, 10, 2);
+  // Case width and deep < corner radius
+  // opening(1.0, 1.0, 2.0);
+  // Case width < corner radius
+  // opening(1.0, 10.0, 2.0);
+  // Case deep < corner radius
+  // opening(10.0, 1.0, 2.0);
+  // Case width and deep > corner radius
+  opening(30.0, 10.0, 2.0);
 }
 if (displayBoreholes == true) {
   $fn=100;
