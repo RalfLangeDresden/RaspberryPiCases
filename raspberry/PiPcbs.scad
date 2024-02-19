@@ -297,6 +297,12 @@ module piPicoPcb()
   }
 }
 
+// Boreholes for fixing Raspberry Pi 3 screws
+module piCameraV2Boreholes(chassisT)
+{
+  boreholes(piCameraV2HoleX, piCameraV2HoleY, piCameraV2HoleD, chassisT);
+}
+
 module piCameraV2Pcb()
 {
   // PCB
@@ -315,8 +321,14 @@ module piCameraV2Pcb()
       
       // Boreholes
       translate([-piCameraV2HoleDC, 0, 0])
-        boreholes(piCameraV2HoleX, piCameraV2HoleY, piCameraV2HoleD, pcbT);
+        piCameraV2Boreholes(pcbT);
     }
+}
+
+// Boreholes for fixing Raspberry Pi 3 screws
+module piCameraV3Boreholes(chassisT)
+{
+  boreholes(piCameraV3HoleX, piCameraV3HoleY, piCameraV3HoleD, chassisT);
 }
 
 module piCameraV3Pcb()
@@ -337,8 +349,14 @@ module piCameraV3Pcb()
       
       // Boreholes
       translate([-piCameraV3HoleDC, 0, 0])
-        boreholes(piCameraV3HoleX, piCameraV3HoleY, piCameraV3HoleD, pcbT);
+        piCameraV3Boreholes(pcbT);
     }
+}
+
+// Boreholes for fixing Raspberry Pi 3 screws
+module piCameraHqBoreholes(chassisT)
+{
+  boreholes(piCameraHqHoleX, piCameraHqHoleY, piCameraHqHoleD, chassisT);
 }
 
 module piCameraHqPcb()
@@ -358,7 +376,7 @@ module piCameraHqPcb()
       }
 
       // Boreholes
-      boreholes(piCameraHqHoleX, piCameraHqHoleY, piCameraHqHoleD, pcbT);
+      piCameraHqBoreholes(pcbT);
     }
 }
 
