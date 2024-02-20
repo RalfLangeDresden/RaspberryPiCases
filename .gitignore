@@ -1,3 +1,5 @@
 # exclude directories
-/stl
+/imports
 /AstroPi
+/*/stl
+/*/external
