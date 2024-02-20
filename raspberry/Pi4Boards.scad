@@ -89,7 +89,7 @@ module pi4B(heatSink = false)
       microSDCardSlot(detail);
 
   // Processor chip
-  translate([-pi4bPcbW/2+29.25, -pi4bPcbD/2+32.5, 0])
+  translate([socOffsetW, socOffsetD, 0])
     bcm2711(heatSink, detail);
 
   // Memory chip

@@ -68,3 +68,9 @@ displayOffsetZ = 0.0;
 sdCardOffsetW = -pi4bPcbW/2 + 13/2;
 sdCardOffsetD = 0.0;
 sdCardOffsetZ = 0.0;
+
+// Offset for system on chip
+
+socOffsetW = -pi4bPcbW/2+29.25;
+socOffsetD = -pi4bPcbD/2+32.5;
+socOffsetZ = 0.0;

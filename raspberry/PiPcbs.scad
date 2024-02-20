@@ -162,7 +162,7 @@ module pi3bPcb(withHeader=false)
 }
 
 // Raspberry Pi 3 HAT printed circuit board
-module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, withHeader=false, socketFemaleZ=2, pinZ=6.55)
+module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, withHeaderTop=false, withHeaderDown=true, socketFemaleZ=2, pinZ=6.55)
 {
   // PCB
   color("blue") {
@@ -206,14 +206,15 @@ module pi3HatPcb(withCameraSlot=false, withDisplaySlot=false, socketMaleZ=8.55, 
   }
 
   // Header top
-  if (withHeader)
+  if (withHeaderTop)
     translate([0, pi3HatPcbD/2-pi3HatHoleDY, pcbT/2])
       headerMale(20, 2, socketFemaleZ, pinZ);
 
   // Header down
-  translate([0, pi3HatPcbD/2-pi3HatHoleDY, -pcbT/2])
-    rotate([0, 180, 0])
-      headerFemale(20, 2, socketMaleZ);
+  if (withHeaderDown)
+    translate([0, pi3HatPcbD/2-pi3HatHoleDY, -pcbT/2])
+      rotate([0, 180, 0])
+        headerFemale(20, 2, socketMaleZ);
 }
 
 // Boreholes for fixing Raspberry Pi 4 screws
