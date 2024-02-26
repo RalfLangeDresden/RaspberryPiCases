@@ -19,28 +19,28 @@ To generate the STL for the 3D printer switch on only the wished part and switch
 ## Raspberry Pi modules
 The sub directory 'raspberry' contain the dummy modules for some types of Raspberry Pi, some Raspberry Products and the Raspberry Pi printed circuit boards.
 
-![Raspberry Pi modules](image/PiImage.png)
+![Raspberry Pi modules](res/PiImage.png)
 
 ## Raspberry Pi HAT modules
 The sub directory 'hat' contain the dummy modules for some Raspberry Pi HAT modules.
 
-![Raspberry Pi HAT modules](image/PiHatImage.png)
+![Raspberry Pi HAT modules](res/PiHatImage.png)
 
 ## Raspberry Pi 3b case for a net radio
 The sub directory 'RadioPi' contain some cases for a net radio based on a Raspberry Pi 3b.
 
 It has a 7" touch display, a Raspberry Pi 3b, a UPS HAT module and a audio interface HAT module inside.
 
-![Alt-Text](image/Case7_V3.png)
+![Alt-Text](res/Case7_V3.png)
 
 ## Raspberry Pi 4b case for StopMotionPi
 The sub directory 'StopMotionPi' contain the case for the StopMotionPi project.
 
 It has a Raspberry Pi 4b and a UPS HAT module inside and a mount for the Raspberry HQ camera outside.
 
-![StopMotionPi](image/StopMotionPi.png)
+![StopMotionPi](res/StopMotionPi.png)
 
 ## Universal three part case
 As a base for most of the cases, the sub directory 'parts' contain the empty three part case and all the active and passive components.
 
-![Universal case](image/Case3Parts.png)
+![Universal case](res/Case3Parts.png)
