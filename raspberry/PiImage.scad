@@ -66,4 +66,11 @@ if(displayImage == true) {
       pi4B();
     }
   }
+
+  translate([(pi4bPcbW + piCameraV3PcbW)/2 + 15.0, -piCameraV3PcbD/2 - 10.0, 0]) {
+    // Raspberry Camera HQ
+    translate([0, 0, 0]) {
+      piCameraV3();
+    }
+  }
 }
